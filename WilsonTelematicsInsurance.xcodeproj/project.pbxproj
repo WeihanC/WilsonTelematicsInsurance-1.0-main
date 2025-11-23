@@ -1,0 +1,662 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A0000010000000000000001 /* WilsonTelematicsInsuranceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000020000000000000001 /* WilsonTelematicsInsuranceApp.swift */; };
+		2A0000030000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000040000000000000001 /* AppDelegate.swift */; };
+		2A0000050000000000000001 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000060000000000000001 /* DashboardView.swift */; };
+		2A0000070000000000000001 /* PricingLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000080000000000000001 /* PricingLabView.swift */; };
+		2A0000090000000000000001 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000A0000000000000001 /* TipsView.swift */; };
+		2A00000B0000000000000001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000C0000000000000001 /* OnboardingView.swift */; };
+		2A00000D0000000000000001 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000E0000000000000001 /* Trip.swift */; };
+		2A00000F0000000000000001 /* DriverFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000100000000000000001 /* DriverFeatures.swift */; };
+		2A0000110000000000000001 /* PricingQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000120000000000000001 /* PricingQuote.swift */; };
+		2A0000130000000000000001 /* TelematicsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000140000000000000001 /* TelematicsService.swift */; };
+		2A0000150000000000000001 /* PricingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000160000000000000001 /* PricingModel.swift */; };
+		2A0000170000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A0000180000000000000001 /* Assets.xcassets */; };
+		9B611DFD2ECED7EE00818F34 /* TelematicsSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9B611DFC2ECED7EE00818F34 /* TelematicsSDK */; };
+		9B617FAB2ED1AE490016CB34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B617FAA2ED1AE490016CB34 /* GoogleService-Info.plist */; };
+		9B617FAE2ED1AEF40016CB34 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FAD2ED1AEF40016CB34 /* FirebaseAnalytics */; };
+		9B617FB02ED1AEF40016CB34 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FAF2ED1AEF40016CB34 /* FirebaseAuth */; };
+		9B617FB22ED1AEF40016CB34 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FB12ED1AEF40016CB34 /* FirebaseCore */; };
+		9B617FB42ED1AEF40016CB34 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FB32ED1AEF40016CB34 /* FirebaseFirestore */; };
+		9B617FB62ED1AF760016CB34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FB52ED1AF760016CB34 /* ContentView.swift */; };
+		9B617FB82ED1AFED0016CB34 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FB72ED1AFED0016CB34 /* AuthViewModel.swift */; };
+		9B617FBA2ED1AFFF0016CB34 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FB92ED1AFFF0016CB34 /* AuthView.swift */; };
+		9B617FBC2ED1B13B0016CB34 /* TelematicsAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */; };
+		9B617FBF2ED1B1E90016CB34 /* LoginAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; };
+		9B617FC02ED1B1E90016CB34 /* LoginAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9B617FC12ED1B1E90016CB34 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9B617FC02ED1B1E90016CB34 /* LoginAuth.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2A0000020000000000000001 /* WilsonTelematicsInsuranceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WilsonTelematicsInsuranceApp.swift; sourceTree = "<group>"; };
+		2A0000040000000000000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2A0000060000000000000001 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		2A0000080000000000000001 /* PricingLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingLabView.swift; sourceTree = "<group>"; };
+		2A00000A0000000000000001 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
+		2A00000C0000000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2A00000E0000000000000001 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		2A0000100000000000000001 /* DriverFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverFeatures.swift; sourceTree = "<group>"; };
+		2A0000120000000000000001 /* PricingQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingQuote.swift; sourceTree = "<group>"; };
+		2A0000140000000000000001 /* TelematicsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelematicsService.swift; sourceTree = "<group>"; };
+		2A0000160000000000000001 /* PricingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingModel.swift; sourceTree = "<group>"; };
+		2A0000180000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A00001A0000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A00001B0000000000000001 /* WilsonTelematicsInsurance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WilsonTelematicsInsurance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B617FAA2ED1AE490016CB34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9B617FB52ED1AF760016CB34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9B617FB72ED1AFED0016CB34 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		9B617FB92ED1AFFF0016CB34 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelematicsAuthManager.swift; sourceTree = "<group>"; };
+		9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LoginAuth.xcframework; path = "../WilsonTelematicsInsurance 4/LoginAuth.xcframework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A00001C0000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B617FAE2ED1AEF40016CB34 /* FirebaseAnalytics in Frameworks */,
+				9B617FBF2ED1B1E90016CB34 /* LoginAuth.xcframework in Frameworks */,
+				9B617FB02ED1AEF40016CB34 /* FirebaseAuth in Frameworks */,
+				9B617FB22ED1AEF40016CB34 /* FirebaseCore in Frameworks */,
+				9B617FB42ED1AEF40016CB34 /* FirebaseFirestore in Frameworks */,
+				9B611DFD2ECED7EE00818F34 /* TelematicsSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A00001D0000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				2A00001E0000000000000001 /* WilsonTelematicsInsurance */,
+				9B617FBD2ED1B1E90016CB34 /* Frameworks */,
+				2A00001F0000000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A00001E0000000000000001 /* WilsonTelematicsInsurance */ = {
+			isa = PBXGroup;
+			children = (
+				9B617FAA2ED1AE490016CB34 /* GoogleService-Info.plist */,
+				2A0000200000000000000001 /* App */,
+				2A0000210000000000000001 /* Core */,
+				2A0000220000000000000001 /* Features */,
+				2A00001A0000000000000001 /* Info.plist */,
+				2A0000180000000000000001 /* Assets.xcassets */,
+			);
+			path = WilsonTelematicsInsurance;
+			sourceTree = "<group>";
+		};
+		2A00001F0000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A00001B0000000000000001 /* WilsonTelematicsInsurance.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A0000200000000000000001 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */,
+				2A0000020000000000000001 /* WilsonTelematicsInsuranceApp.swift */,
+				2A0000040000000000000001 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2A0000210000000000000001 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2A0000230000000000000001 /* Models */,
+				2A0000240000000000000001 /* Services */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2A0000220000000000000001 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2A0000250000000000000001 /* Dashboard */,
+				2A0000260000000000000001 /* PricingLab */,
+				2A0000270000000000000001 /* Tips */,
+				2A0000280000000000000001 /* Onboarding */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		2A0000230000000000000001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2A00000E0000000000000001 /* Trip.swift */,
+				2A0000100000000000000001 /* DriverFeatures.swift */,
+				2A0000120000000000000001 /* PricingQuote.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2A0000240000000000000001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2A0000140000000000000001 /* TelematicsService.swift */,
+				2A0000160000000000000001 /* PricingModel.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2A0000250000000000000001 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				9B617FB92ED1AFFF0016CB34 /* AuthView.swift */,
+				9B617FB72ED1AFED0016CB34 /* AuthViewModel.swift */,
+				9B617FB52ED1AF760016CB34 /* ContentView.swift */,
+				2A0000060000000000000001 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		2A0000260000000000000001 /* PricingLab */ = {
+			isa = PBXGroup;
+			children = (
+				2A0000080000000000000001 /* PricingLabView.swift */,
+			);
+			path = PricingLab;
+			sourceTree = "<group>";
+		};
+		2A0000270000000000000001 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				2A00000A0000000000000001 /* TipsView.swift */,
+			);
+			path = Tips;
+			sourceTree = "<group>";
+		};
+		2A0000280000000000000001 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2A00000C0000000000000001 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		9B617FBD2ED1B1E90016CB34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A0000290000000000000001 /* WilsonTelematicsInsurance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A00002A0000000000000001 /* Build configuration list for PBXNativeTarget "WilsonTelematicsInsurance" */;
+			buildPhases = (
+				2A00002B0000000000000001 /* Sources */,
+				2A00001C0000000000000001 /* Frameworks */,
+				2A00002C0000000000000001 /* Resources */,
+				9B617FC12ED1B1E90016CB34 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WilsonTelematicsInsurance;
+			packageProductDependencies = (
+				9B611DFC2ECED7EE00818F34 /* TelematicsSDK */,
+				9B617FAD2ED1AEF40016CB34 /* FirebaseAnalytics */,
+				9B617FAF2ED1AEF40016CB34 /* FirebaseAuth */,
+				9B617FB12ED1AEF40016CB34 /* FirebaseCore */,
+				9B617FB32ED1AEF40016CB34 /* FirebaseFirestore */,
+			);
+			productName = WilsonTelematicsInsurance;
+			productReference = 2A00001B0000000000000001 /* WilsonTelematicsInsurance.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A00002D0000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					2A0000290000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 2A00002E0000000000000001 /* Build configuration list for PBXProject "WilsonTelematicsInsurance" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2A00001D0000000000000001;
+			packageReferences = (
+				9B611DFB2ECED7EE00818F34 /* XCRemoteSwiftPackageReference "telematicsSDK-iOS-new-SPM" */,
+				9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = 2A00001F0000000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A0000290000000000000001 /* WilsonTelematicsInsurance */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A00002C0000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A0000170000000000000001 /* Assets.xcassets in Resources */,
+				9B617FAB2ED1AE490016CB34 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A00002B0000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B617FBA2ED1AFFF0016CB34 /* AuthView.swift in Sources */,
+				2A0000010000000000000001 /* WilsonTelematicsInsuranceApp.swift in Sources */,
+				2A0000030000000000000001 /* AppDelegate.swift in Sources */,
+				9B617FB62ED1AF760016CB34 /* ContentView.swift in Sources */,
+				2A0000050000000000000001 /* DashboardView.swift in Sources */,
+				2A0000070000000000000001 /* PricingLabView.swift in Sources */,
+				2A0000090000000000000001 /* TipsView.swift in Sources */,
+				2A00000B0000000000000001 /* OnboardingView.swift in Sources */,
+				2A00000D0000000000000001 /* Trip.swift in Sources */,
+				2A00000F0000000000000001 /* DriverFeatures.swift in Sources */,
+				2A0000110000000000000001 /* PricingQuote.swift in Sources */,
+				9B617FBC2ED1B13B0016CB34 /* TelematicsAuthManager.swift in Sources */,
+				2A0000130000000000000001 /* TelematicsService.swift in Sources */,
+				9B617FB82ED1AFED0016CB34 /* AuthViewModel.swift in Sources */,
+				2A0000150000000000000001 /* PricingModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2A00002F0000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WilsonTelematicsInsurance/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.telematicsinsurance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2A0000300000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WilsonTelematicsInsurance/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.telematicsinsurance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2A0000310000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3DY7TT8RB8;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A0000320000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3DY7TT8RB8;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A00002A0000000000000001 /* Build configuration list for PBXNativeTarget "WilsonTelematicsInsurance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A00002F0000000000000001 /* Debug */,
+				2A0000300000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A00002E0000000000000001 /* Build configuration list for PBXProject "WilsonTelematicsInsurance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A0000310000000000000001 /* Debug */,
+				2A0000320000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9B611DFB2ECED7EE00818F34 /* XCRemoteSwiftPackageReference "telematicsSDK-iOS-new-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Mobile-Telematics/telematicsSDK-iOS-new-SPM";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.2;
+			};
+		};
+		9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9B611DFC2ECED7EE00818F34 /* TelematicsSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B611DFB2ECED7EE00818F34 /* XCRemoteSwiftPackageReference "telematicsSDK-iOS-new-SPM" */;
+			productName = TelematicsSDK;
+		};
+		9B617FAD2ED1AEF40016CB34 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		9B617FAF2ED1AEF40016CB34 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9B617FB12ED1AEF40016CB34 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		9B617FB32ED1AEF40016CB34 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 2A00002D0000000000000001 /* Project object */;
+}
