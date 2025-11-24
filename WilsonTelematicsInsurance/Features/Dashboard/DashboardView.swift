@@ -54,15 +54,27 @@ struct DashboardView: View {
     }
     
     private func calculateFeatures() {
-        let trips = telematicsService.getAllTrips()
-        driverFeatures = DriverFeatures(from: trips)
+        let stats = telematicsService.dailyStats
+        guard !stats.isEmpty else {
+            self.driverFeatures = nil
+            return
+        }
+        
+        self.driverFeatures = DriverFeatures.fromDailyStats(stats)
     }
+
     
     private func refreshData() {
+        guard telematicsService.credentials != nil else {
+            print("❌ No telematics credentials, please login / create telematics user first")
+            return
+        }
         isLoading = true
         Task {
             do {
-                _ = try await telematicsService.fetchTrips()
+                _ = try await telematicsService.fetchTrips()      // trips 还可以留着
+                _ = try await telematicsService.fetchDailyStats() // ✅ 新增：拉 daily stats
+                
                 await MainActor.run {
                     calculateFeatures()
                     isLoading = false
@@ -75,6 +87,7 @@ struct DashboardView: View {
             }
         }
     }
+
 }
 
 // MARK: - Driving Score Card

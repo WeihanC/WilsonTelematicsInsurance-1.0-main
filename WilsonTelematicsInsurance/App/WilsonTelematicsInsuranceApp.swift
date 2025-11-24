@@ -6,18 +6,12 @@
 //
 
 import SwiftUI
-import FirebaseCore
 
 @main
 struct WilsonTelematicsInsuranceApp: App {
 
-    // 把你写好的 AppDelegate 接入 SwiftUI 生命周期
+    // 接入 AppDelegate（负责 Firebase + RPEntry 初始化）
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
-    init() {
-        FirebaseApp.configure()
-        print("✅ Firebase configured")
-    }
 
     @StateObject private var authVM = AuthViewModel()
 
@@ -25,11 +19,11 @@ struct WilsonTelematicsInsuranceApp: App {
         WindowGroup {
             Group {
                 if authVM.user == nil {
-                    // 没登录 → 显示登录 / 注册界面
+                    // 未登录 → 显示登录/注册
                     AuthView()
                         .environmentObject(authVM)
                 } else {
-                    // 已登录 → 显示你的主界面（里面再做 Onboarding + MainTabView）
+                    // 登录后 → 主界面
                     ContentView()
                         .environmentObject(authVM)
                 }
@@ -40,7 +34,7 @@ struct WilsonTelematicsInsuranceApp: App {
 
 
 
-// MARK: - Main Tab View (主界面 Tab + 右上角 Sign Out)
+// MARK: - Main Tab View (你的主 TabBar)
 
 struct MainTabView: View {
     @EnvironmentObject var authVM: AuthViewModel
@@ -79,7 +73,6 @@ struct MainTabView: View {
         }
     }
 
-    /// 根据当前 tab 显示标题
     private var tabTitle: String {
         switch selectedTab {
         case 0: return "Dashboard"

@@ -2,148 +2,166 @@
 //  DriverFeatures.swift
 //  WilsonTelematicsInsurance
 //
-//  Core layer: Aggregated driving behavior features for risk assessment
+//  聚合驾驶数据，用于 Dashboard 统计 & 保险定价
 //
 
 import Foundation
 
-/// Aggregated driving behavior features extracted from multiple trips
-struct DriverFeatures: Codable {
-    // Trip volume
+struct DriverFeatures {
+    // 核心聚合指标
     let totalTrips: Int
-    let totalDistance: Double // km
-    let totalDuration: TimeInterval // seconds
+    let totalDistance: Double      // km
+    let totalHours: Double         // h
+    let averageSpeed: Double       // km/h
     
-    // Speed metrics
-    let averageSpeed: Double // km/h
-    let maxSpeedRecorded: Double // km/h
-    let speedingEventsPerTrip: Double
+    // 行为风险指标（总量）
+    let totalBrakings: Int
+    let totalAccelerations: Int
+    let totalCornerings: Int
+    let totalPhoneUsageMin: Double
+    let totalSpeedingKm: Double
+    let totalNightDrivingMin: Double
     
-    // Harsh event metrics (per 100 km)
-    let harshBrakingRate: Double
-    let harshAccelerationRate: Double
-    let harshCorneringRate: Double
-    
-    // Phone distraction
-    let phoneUsageRatio: Double // 0.0 to 1.0
-    
-    // Time-based risk factors
-    let nightDrivingRatio: Double // 0.0 to 1.0
-    let rushHourDrivingRatio: Double // 0.0 to 1.0
-    
-    // Computed properties
-    var averageTripDistance: Double {
-        totalTrips > 0 ? totalDistance / Double(totalTrips) : 0
+    // MARK: - 主构造函数
+    init(
+        totalTrips: Int,
+        totalDistance: Double,
+        totalHours: Double,
+        averageSpeed: Double,
+        totalBrakings: Int = 0,
+        totalAccelerations: Int = 0,
+        totalCornerings: Int = 0,
+        totalPhoneUsageMin: Double = 0,
+        totalSpeedingKm: Double = 0,
+        totalNightDrivingMin: Double = 0
+    ) {
+        self.totalTrips = totalTrips
+        self.totalDistance = totalDistance
+        self.totalHours = totalHours
+        self.averageSpeed = averageSpeed
+        self.totalBrakings = totalBrakings
+        self.totalAccelerations = totalAccelerations
+        self.totalCornerings = totalCornerings
+        self.totalPhoneUsageMin = totalPhoneUsageMin
+        self.totalSpeedingKm = totalSpeedingKm
+        self.totalNightDrivingMin = totalNightDrivingMin
     }
     
-    var totalHours: Double {
-        totalDuration / 3600.0
+    // MARK: - 从 DailyStats 聚合（Dashboard / Pricing 正在用）
+    static func fromDailyStats(_ stats: [DailyStat]) -> DriverFeatures {
+        let totalDistance = stats.reduce(0) { $0 + $1.mileageKm }
+        let totalTrips = stats.reduce(0) { $0 + $1.tripsCount }
+        let totalDrivingMin = stats.reduce(0) { $0 + $1.drivingTimeMin }
+        let totalBrakings = stats.reduce(0) { $0 + $1.brakingsCount }
+        let totalAccelerations = stats.reduce(0) { $0 + $1.accelerationsCount }
+        let totalCornerings = stats.reduce(0) { $0 + $1.corneringsCount }
+        let totalPhoneUsageMin = stats.reduce(0) { $0 + $1.phoneUsageMin }
+        let totalSpeedingKm = stats.reduce(0) { $0 + $1.speedingKm }
+        let totalNightDrivingMin = stats.reduce(0) { $0 + $1.nightDrivingMin }
+        
+        let avgSpeed = totalDrivingMin > 0
+            ? (totalDistance / (totalDrivingMin / 60.0))
+            : 0
+        
+        return DriverFeatures(
+            totalTrips: totalTrips,
+            totalDistance: totalDistance,
+            totalHours: totalDrivingMin / 60.0,
+            averageSpeed: avgSpeed,
+            totalBrakings: totalBrakings,
+            totalAccelerations: totalAccelerations,
+            totalCornerings: totalCornerings,
+            totalPhoneUsageMin: totalPhoneUsageMin,
+            totalSpeedingKm: totalSpeedingKm,
+            totalNightDrivingMin: totalNightDrivingMin
+        )
     }
     
-    /// Calculate an overall driving score (0-100, higher is better)
+    // MARK: - 可选：从 Trip 列表聚合（老逻辑保留）
+    static func fromTrips(_ trips: [Trip]) -> DriverFeatures {
+        let totalDistance = trips.reduce(0) { $0 + $1.distance }
+        let totalTrips = trips.count
+        let totalMinutes = trips.reduce(0) { $0 + $1.durationInMinutes }
+        let avgSpeed = totalMinutes > 0
+            ? (totalDistance / (totalMinutes / 60.0))
+            : 0
+        
+        let totalBrakings = trips.reduce(0) { $0 + $1.harshBrakingCount }
+        let totalAccelerations = 0
+        let totalCornerings = 0
+        let totalPhoneUsageMin = trips.reduce(0) { $0 + $1.phoneUsageSeconds / 60.0 }
+        let totalSpeedingKm: Double = 0
+        let totalNightDrivingMin: Double = 0
+        
+        return DriverFeatures(
+            totalTrips: totalTrips,
+            totalDistance: totalDistance,
+            totalHours: totalMinutes / 60.0,
+            averageSpeed: avgSpeed,
+            totalBrakings: totalBrakings,
+            totalAccelerations: totalAccelerations,
+            totalCornerings: totalCornerings,
+            totalPhoneUsageMin: totalPhoneUsageMin,
+            totalSpeedingKm: totalSpeedingKm,
+            totalNightDrivingMin: totalNightDrivingMin
+        )
+    }
+    
+    // MARK: - 衍生指标（给 PricingModel 用）
+
+    /// 每次行程的“等效超速事件数”（用超速里程 / 次数近似）
+    var speedingEventsPerTrip: Double {
+        guard totalTrips > 0 else { return 0 }
+        // 这里只是一个 proxy：超速里程越大、trip 越少 → 单次 trip 风险越高
+        return totalSpeedingKm / Double(totalTrips)
+    }
+    
+    /// 急刹车率：每 100km 的急刹次数
+    var harshBrakingRate: Double {
+        guard totalDistance > 0 else { return 0 }
+        // totalBrakings / (总里程 / 100km)
+        return Double(totalBrakings) / (totalDistance / 100.0)
+    }
+    
+    /// 开车玩手机占总驾驶时间的比例（0–1）
+    var phoneUsageRatio: Double {
+        let totalMinutes = totalHours * 60.0
+        guard totalMinutes > 0 else { return 0 }
+        return min(totalPhoneUsageMin / totalMinutes, 1.0)
+    }
+    
+    /// 夜间驾驶时间占总驾驶时间的比例（0–1）
+    var nightDrivingRatio: Double {
+        let totalMinutes = totalHours * 60.0
+        guard totalMinutes > 0 else { return 0 }
+        return min(totalNightDrivingMin / totalMinutes, 1.0)
+    }
+    
+    // MARK: - 驾驶评分（0–100，跟 PricingModel 里的 riskScore 相反）
     func calculateDrivingScore() -> Double {
-        var score = 100.0
+        var score: Double = 100
         
-        // Deduct points for harsh events
-        score -= min(harshBrakingRate * 2.0, 15.0)
-        score -= min(harshAccelerationRate * 2.0, 15.0)
-        score -= min(harshCorneringRate * 1.5, 10.0)
-        
-        // Deduct points for speeding
-        score -= min(speedingEventsPerTrip * 3.0, 20.0)
-        
-        // Deduct points for phone usage
-        score -= phoneUsageRatio * 15.0
-        
-        // Deduct points for risky time periods
-        score -= nightDrivingRatio * 10.0
-        score -= rushHourDrivingRatio * 5.0
-        
-        return max(score, 0.0)
-    }
-}
-
-// MARK: - Initialization from Trips
-extension DriverFeatures {
-    /// Initialize from an array of trips
-    init(from trips: [Trip]) {
-        self.totalTrips = trips.count
-        self.totalDistance = trips.reduce(0) { $0 + $1.distance }
-        self.totalDuration = trips.reduce(0) { $0 + $1.duration }
-        
-        // Calculate averages
-        if trips.isEmpty {
-            self.averageSpeed = 0
-            self.maxSpeedRecorded = 0
-            self.speedingEventsPerTrip = 0
-            self.harshBrakingRate = 0
-            self.harshAccelerationRate = 0
-            self.harshCorneringRate = 0
-            self.phoneUsageRatio = 0
-            self.nightDrivingRatio = 0
-            self.rushHourDrivingRatio = 0
-        } else {
-            self.averageSpeed = trips.reduce(0) { $0 + $1.averageSpeed } / Double(trips.count)
-            self.maxSpeedRecorded = trips.map { $0.maxSpeed }.max() ?? 0
-            self.speedingEventsPerTrip = Double(trips.reduce(0) { $0 + $1.speedingEvents }) / Double(trips.count)
-            
-            // Calculate harsh event rates per 100 km
-            let totalHarshBraking = trips.reduce(0) { $0 + $1.harshBrakingCount }
-            let totalHarshAcceleration = trips.reduce(0) { $0 + $1.harshAccelerationCount }
-            let totalHarshCornering = trips.reduce(0) { $0 + $1.harshCorneringCount }
-            
-            self.harshBrakingRate = totalDistance > 0 ? Double(totalHarshBraking) / totalDistance * 100 : 0
-            self.harshAccelerationRate = totalDistance > 0 ? Double(totalHarshAcceleration) / totalDistance * 100 : 0
-            self.harshCorneringRate = totalDistance > 0 ? Double(totalHarshCornering) / totalDistance * 100 : 0
-            
-            // Calculate phone usage ratio
-            let totalPhoneUsage = trips.reduce(0) { $0 + $1.phoneUsageSeconds }
-            self.phoneUsageRatio = totalDuration > 0 ? totalPhoneUsage / totalDuration : 0
-            
-            // Calculate time-based ratios
-            self.nightDrivingRatio = trips.reduce(0) { $0 + $1.nightDrivingRatio } / Double(trips.count)
-            self.rushHourDrivingRatio = trips.reduce(0) { $0 + $1.rushHourDrivingRatio } / Double(trips.count)
+        // 平均速度惩罚：> 90km/h 开始扣分
+        if averageSpeed > 90 {
+            let over = averageSpeed - 90
+            score -= min(over * 0.5, 20)
         }
-    }
-}
-
-// MARK: - Mock Data
-extension DriverFeatures {
-    static func mock() -> DriverFeatures {
-        DriverFeatures(from: Trip.mockTrips())
-    }
-    
-    static func mockSafeDriver() -> DriverFeatures {
-        DriverFeatures(
-            totalTrips: 50,
-            totalDistance: 800,
-            totalDuration: 36000,
-            averageSpeed: 45,
-            maxSpeedRecorded: 75,
-            speedingEventsPerTrip: 0.5,
-            harshBrakingRate: 0.8,
-            harshAccelerationRate: 0.6,
-            harshCorneringRate: 1.0,
-            phoneUsageRatio: 0.02,
-            nightDrivingRatio: 0.15,
-            rushHourDrivingRatio: 0.25
-        )
-    }
-    
-    static func mockRiskyDriver() -> DriverFeatures {
-        DriverFeatures(
-            totalTrips: 50,
-            totalDistance: 1200,
-            totalDuration: 42000,
-            averageSpeed: 65,
-            maxSpeedRecorded: 110,
-            speedingEventsPerTrip: 8.5,
-            harshBrakingRate: 5.2,
-            harshAccelerationRate: 4.8,
-            harshCorneringRate: 3.5,
-            phoneUsageRatio: 0.18,
-            nightDrivingRatio: 0.45,
-            rushHourDrivingRatio: 0.55
-        )
+        
+        // 急刹 / 急加速 / 急转弯
+        let events = Double(totalBrakings + totalAccelerations + totalCornerings)
+        score -= min(events * 0.8, 25)
+        
+        // 超速里程
+        score -= min(totalSpeedingKm * 0.5, 20)
+        
+        // 开车玩手机
+        score -= min(totalPhoneUsageMin * 1.0, 20)
+        
+        // 行驶得多且稳定给一点加分
+        if totalDistance > 100 {
+            score += min((totalDistance - 100) * 0.02, 5)
+        }
+        
+        return max(0, min(100, score))
     }
 }

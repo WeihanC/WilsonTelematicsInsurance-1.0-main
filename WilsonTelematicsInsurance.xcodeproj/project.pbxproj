@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,7 @@
 		9B617FBF2ED1B1E90016CB34 /* LoginAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; };
 		9B617FC02ED1B1E90016CB34 /* LoginAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FC32ED3B7130016CB34 /* PermissionManager.swift */; };
+		9B617FCB2ED455A00016CB34 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FCA2ED455A00016CB34 /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,6 +73,10 @@
 		9B617FC32ED3B7130016CB34 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9B617FC52ED431A10016CB34 /* data */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = data; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		2A00001C0000000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -82,6 +87,7 @@
 				9B617FB02ED1AEF40016CB34 /* FirebaseAuth in Frameworks */,
 				9B617FB22ED1AEF40016CB34 /* FirebaseCore in Frameworks */,
 				9B617FB42ED1AEF40016CB34 /* FirebaseFirestore in Frameworks */,
+				9B617FCB2ED455A00016CB34 /* FirebaseDatabase in Frameworks */,
 				9B611DFD2ECED7EE00818F34 /* TelematicsSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +148,7 @@
 		2A0000220000000000000001 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				9B617FC52ED431A10016CB34 /* data */,
 				2A0000250000000000000001 /* Dashboard */,
 				2A0000260000000000000001 /* PricingLab */,
 				2A0000270000000000000001 /* Tips */,
@@ -228,6 +235,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				9B617FC52ED431A10016CB34 /* data */,
+			);
 			name = WilsonTelematicsInsurance;
 			packageProductDependencies = (
 				9B611DFC2ECED7EE00818F34 /* TelematicsSDK */,
@@ -235,6 +245,7 @@
 				9B617FAF2ED1AEF40016CB34 /* FirebaseAuth */,
 				9B617FB12ED1AEF40016CB34 /* FirebaseCore */,
 				9B617FB32ED1AEF40016CB34 /* FirebaseFirestore */,
+				9B617FCA2ED455A00016CB34 /* FirebaseDatabase */,
 			);
 			productName = WilsonTelematicsInsurance;
 			productReference = 2A00001B0000000000000001 /* WilsonTelematicsInsurance.app */;
@@ -659,6 +670,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		9B617FCA2ED455A00016CB34 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B617FAC2ED1AEF40016CB34 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
