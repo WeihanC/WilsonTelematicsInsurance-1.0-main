@@ -7,72 +7,57 @@ import Foundation
 import CoreLocation
 import CoreMotion
 
-@MainActor
-final class PermissionManager: NSObject, ObservableObject {
+final class PermissionManager: NSObject, CLLocationManagerDelegate {
 
     static let shared = PermissionManager()
 
     private let locationManager = CLLocationManager()
     private let motionManager = CMMotionActivityManager()
 
-    @Published private(set) var locationStatus: CLAuthorizationStatus = .notDetermined
-    @Published private(set) var motionAuthorized: Bool = false
-
     private override init() {
         super.init()
         locationManager.delegate = self
     }
 
-    /// 一次性请求「始终定位 + 运动与健身」权限
-    func requestAllPermissions() {
-        // 1. 定位权限
-        let status = CLLocationManager.authorizationStatus()
-        if status == .notDetermined {
-            // 直接请求 Always，系统会自动先给 When In Use，再引导升级
-            locationManager.requestAlwaysAuthorization()
-        } else if status == .authorizedWhenInUse {
-            // 已经有前台权限，可以再请求 Always
-            locationManager.requestAlwaysAuthorization()
+    // MARK: - 单独请求 Location 权限
+
+    func requestLocationPermission() {
+        // 如果还没请求过，建议直接要 Always（后台行程才靠谱）
+        locationManager.requestAlwaysAuthorization()
+    }
+
+    // MARK: - 单独请求 Motion & Fitness 权限
+
+    func requestMotionPermission() {
+        guard CMMotionActivityManager.isActivityAvailable() else {
+            print("⚠️ Motion Activity not available on this device")
+            return
         }
 
-        // 2. 运动与健身权限（通过一次假的 query 触发系统弹框）
-        if CMMotionActivityManager.authorizationStatus() == .notDetermined {
-            let now = Date()
-            motionManager.queryActivityStarting(from: now,
-                                                to: now,
-                                                to: .main) { _, error in
-                if error == nil {
-                    self.motionAuthorized = true
-                } else {
-                    self.motionAuthorized = false
-                }
-            }
-        } else {
-            motionAuthorized = (CMMotionActivityManager.authorizationStatus() == .authorized)
+        // 这是苹果官方推荐的触发权限弹窗的方式：做一次假的 query
+        let now = Date()
+        motionManager.queryActivityStarting(from: now,
+                                            to: now,
+                                            to: .main) { _, _ in
+            // 没有实际数据，只是触发授权流程
         }
     }
 
-    /// 简单检查是否“看起来都授权了”
+    // MARK: - 检查权限是否都 OK
+
     func hasAllPermissions() -> Bool {
-        let loc = CLLocationManager.authorizationStatus()
-        let locOK: Bool = {
-            switch loc {
-            case .authorizedAlways: return true
-            case .authorizedWhenInUse: return true   // 先这样，之后可以引导升级 Always
-            default: return false
-            }
-        }()
+        let locStatus = locationManager.authorizationStatus
+        let motionStatus = CMMotionActivityManager.authorizationStatus()
 
-        let motionOK = (CMMotionActivityManager.authorizationStatus() == .authorized)
+        let locationOK = (locStatus == .authorizedAlways || locStatus == .authorizedWhenInUse)
+        let motionOK = (motionStatus == .authorized)
 
-        return locOK && motionOK
+        return locationOK && motionOK
     }
-}
 
-extension PermissionManager: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager,
-                         didChangeAuthorization status: CLAuthorizationStatus) {
-        locationStatus = status
-        print("📍 Location authorization changed: \(status.rawValue)")
+    // MARK: - 调试用 delegate
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        print("📍 Location auth changed: \(manager.authorizationStatus.rawValue)")
     }
 }

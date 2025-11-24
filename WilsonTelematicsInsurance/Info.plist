@@ -47,6 +47,9 @@
 		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
+		<string>processing</string>
+		<string>bluetooth-peripheral</string>
+		<string>bluetooth-central</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict/>

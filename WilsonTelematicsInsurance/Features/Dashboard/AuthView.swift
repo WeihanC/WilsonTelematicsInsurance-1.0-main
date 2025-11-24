@@ -20,7 +20,7 @@ struct AuthView: View {
         NavigationView {
             VStack(spacing: 24) {
 
-                Text("Wilson Telematics Insurance")
+                Text("Telematics Insurance")
                     .font(.title)
                     .fontWeight(.bold)
 

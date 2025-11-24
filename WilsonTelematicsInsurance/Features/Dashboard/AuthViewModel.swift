@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseAuth
-import LoginAuth   // 如果 TelematicsAuthManager.swift 里面已经 import，则这里可以不写
+import LoginAuth   // TelematicsAuthManager 用到
+// 不需要在这里 import TelematicsSDK，交给 TelematicsService 管
 
 final class AuthViewModel: ObservableObject {
     @Published var telematicsDeviceToken: String?
@@ -13,7 +14,8 @@ final class AuthViewModel: ObservableObject {
         self.user = Auth.auth().currentUser
     }
 
-    // 注册
+    // MARK: - 注册（只在「新用户」时调用一次 createTelematicsUser）
+
     func signUp(email: String, password: String) {
         errorMessage = nil
         isLoading = true
@@ -35,7 +37,7 @@ final class AuthViewModel: ObservableObject {
 
                 self.user = firebaseUser
 
-                // ✅ 这里开始：创建 Damoov Telematics 用户
+                // ✅ 第一次为这个账号创建 Damoov Telematics 用户
                 TelematicsAuthManager.shared.createTelematicsUser(
                     email: email,
                     clientId: firebaseUser.uid
@@ -45,6 +47,11 @@ final class AuthViewModel: ObservableObject {
                         case .success(let creds):
                             print("✅ Telematics user created. DeviceToken = \(creds.deviceToken)")
                             self.telematicsDeviceToken = creds.deviceToken
+
+                            // 初始化 SDK，让这个用户开始可追踪
+                            Task { @MainActor in
+                                TelematicsService.shared.configure(with: creds)
+                            }
 
                             // TODO: 以后可以存在 Firestore：
                             // self.saveTelematicsCredentialsToFirestore(user: firebaseUser, creds: creds)
@@ -60,7 +67,8 @@ final class AuthViewModel: ObservableObject {
         }
     }
 
-    // 登录
+    // MARK: - 登录（⚠️ 不要再每次 createTelematicsUser）
+
     func signIn(email: String, password: String) {
         errorMessage = nil
         isLoading = true
@@ -78,18 +86,38 @@ final class AuthViewModel: ObservableObject {
                 guard let firebaseUser = result?.user else { return }
                 self.user = firebaseUser
 
-                // 简单做法：每次登录都尝试获取/创建 telematics 用户（由服务端去判断是否已存在）
-                TelematicsAuthManager.shared.createTelematicsUser(
-                    email: email,
-                    clientId: firebaseUser.uid
-                ) { result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .success(let creds):
-                            print("✅ Telematics credentials (login): \(creds.deviceToken)")
-                            self.telematicsDeviceToken = creds.deviceToken
-                        case .failure(let error):
-                            print("❌ Telematics auth on login failed: \(error)")
+                // ✅ 登录时的正确流程：
+                // 1. 先尝试从本地读取已经保存的 TelematicsCredentials
+                if let savedCreds = TelematicsAuthManager.loadSavedCredentials() {
+                    print("✅ Loaded saved telematics credentials. DeviceToken = \(savedCreds.deviceToken)")
+                    self.telematicsDeviceToken = savedCreds.deviceToken
+
+                    // 2. 用已有的 deviceToken 配置 SDK（同一个账号 = 同一个 deviceToken）
+                    Task { @MainActor in
+                        TelematicsService.shared.configure(with: savedCreds)
+                    }
+                } else {
+                    // 3. 如果本地没有（例如你第一次写这套逻辑之前的老账号），可以临时再创建一次
+                    //    注意：真实上线时建议从你的后端拿，而不是在客户端频繁新建
+                    print("⚠️ No saved telematics credentials. Creating a new telematics user for this account...")
+
+                    TelematicsAuthManager.shared.createTelematicsUser(
+                        email: email,
+                        clientId: firebaseUser.uid
+                    ) { result in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .success(let creds):
+                                print("✅ Telematics credentials (login created): \(creds.deviceToken)")
+                                self.telematicsDeviceToken = creds.deviceToken
+
+                                Task { @MainActor in
+                                    TelematicsService.shared.configure(with: creds)
+                                }
+
+                            case .failure(let error):
+                                print("❌ Telematics auth on login failed: \(error)")
+                            }
                         }
                     }
                 }
@@ -97,11 +125,19 @@ final class AuthViewModel: ObservableObject {
         }
     }
 
-    // 登出
-    func signOut() {
+    // MARK: - 登出
+
+    @MainActor func signOut() {
         do {
             try Auth.auth().signOut()
             user = nil
+
+            // 登出时，可以让 SDK 停止追踪（避免后台还在跑）
+            TelematicsService.shared.disableSDK()
+
+            // 注意：这里 **不要** 调 TelematicsAuthManager.shared.clearCredentials()
+            // 否则下次登录又会生成新的 deviceToken，跟你现在遇到的问题一样。
+
         } catch {
             errorMessage = error.localizedDescription
         }

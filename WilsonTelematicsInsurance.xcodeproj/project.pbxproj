@@ -31,6 +31,7 @@
 		9B617FBC2ED1B13B0016CB34 /* TelematicsAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */; };
 		9B617FBF2ED1B1E90016CB34 /* LoginAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; };
 		9B617FC02ED1B1E90016CB34 /* LoginAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FC32ED3B7130016CB34 /* PermissionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +69,7 @@
 		9B617FB92ED1AFFF0016CB34 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelematicsAuthManager.swift; sourceTree = "<group>"; };
 		9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LoginAuth.xcframework; path = "../WilsonTelematicsInsurance 4/LoginAuth.xcframework"; sourceTree = "<group>"; };
+		9B617FC32ED3B7130016CB34 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		2A0000200000000000000001 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				9B617FC32ED3B7130016CB34 /* PermissionManager.swift */,
 				9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */,
 				2A0000020000000000000001 /* WilsonTelematicsInsuranceApp.swift */,
 				2A0000040000000000000001 /* AppDelegate.swift */,
@@ -297,6 +300,7 @@
 				9B617FB62ED1AF760016CB34 /* ContentView.swift in Sources */,
 				2A0000050000000000000001 /* DashboardView.swift in Sources */,
 				2A0000070000000000000001 /* PricingLabView.swift in Sources */,
+				9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */,
 				2A0000090000000000000001 /* TipsView.swift in Sources */,
 				2A00000B0000000000000001 /* OnboardingView.swift in Sources */,
 				2A00000D0000000000000001 /* Trip.swift in Sources */,
@@ -375,7 +379,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,7 +455,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

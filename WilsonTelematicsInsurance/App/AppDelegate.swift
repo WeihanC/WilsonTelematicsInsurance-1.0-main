@@ -9,23 +9,23 @@ import UIKit
 import TelematicsSDK
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        print("🚀 App launched")
-        
-        // CRITICAL: Initialize SDK first before accessing RPEntry.instance
+
+        // 1. 初始化 SDK（必须最早调用）
         RPEntry.initializeSDK()
-        
-        // Note: Device token should be set after user authentication
-        // For development/testing, you can set a test token here:
-        // let testToken = "YOUR_TEST_DEVICE_TOKEN"
-        // RPEntry.instance.virtualDeviceToken = testToken
-        // RPEntry.instance.setEnableSdk(true)
-        
+
+        // 2. 把 AppDelegate 事件转给 SDK
+        let options = launchOptions ?? [:]
+        RPEntry.instance.application(application, didFinishLaunchingWithOptions: options)
+
+        // 可选：低电量、精度不足的 delegate 将来再加
         return true
     }
+
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("🌅 App entering foreground")

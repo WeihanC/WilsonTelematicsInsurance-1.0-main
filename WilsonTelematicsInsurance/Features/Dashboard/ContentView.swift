@@ -1,39 +1,39 @@
+//
+//  ContentView.swift
+//  WilsonTelematicsInsurance
+//
+//  Root view after successful authentication
+//
+
 import SwiftUI
 
 struct ContentView: View {
 
     @EnvironmentObject var authVM: AuthViewModel
 
+    /// 记录是否已经完成 onboarding（存到本地，重新打开 App 也记得）
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+
     var body: some View {
-        VStack(spacing: 16) {
-            Text("🔥 Logged in")
-                .font(.title)
-
-            if let user = authVM.user {
-                Text("Email: \(user.email ?? "unknown")")
-            }
-
-            if let token = authVM.telematicsDeviceToken {
-                Text("Telematics Device Token:")
-                    .font(.headline)
-                Text(token)
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+        Group {
+            if hasCompletedOnboarding {
+                // ✅ Onboarding 结束 → 真正的主界面
+                MainTabView()
+                    .toolbar {
+                        // 简单在右上角给一个 Sign Out
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Sign Out") {
+                                authVM.signOut()
+                            }
+                        }
+                    }
             } else {
-                Text("No telematics token yet.")
-                    .foregroundColor(.secondary)
+                // ❗第一次登录 / 还没看完 Onboarding → 展示 Onboarding
+                OnboardingView(isOnboardingComplete: $hasCompletedOnboarding)
             }
-
-            Button("Sign Out") {
-                authVM.signOut()
-            }
-            .padding(.top, 20)
         }
-        .padding()
     }
 }
-
 
 #Preview {
     ContentView()
