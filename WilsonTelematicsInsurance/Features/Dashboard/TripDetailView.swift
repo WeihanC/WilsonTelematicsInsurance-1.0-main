@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct TripDetailView: View {
-    @EnvironmentObject var telematicsService: TelematicsService
+    // 直接用单例，不用 EnvironmentObject
+    @ObservedObject private var telematicsService = TelematicsService.shared
     let trip: Trip
 
     var body: some View {
@@ -10,12 +11,14 @@ struct TripDetailView: View {
 
                 // MARK: 地图折线
                 if !telematicsService.currentTripCoordinates.isEmpty {
-                    TripMapView(coordinates: telematicsService.currentTripCoordinates)
-                        .frame(height: 260)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .padding(.horizontal)
+                    TripMapView(
+                        coordinates: telematicsService.currentTripCoordinates,
+                        events: telematicsService.currentTripEvents
+                    )
+                    .frame(height: 260)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .padding(.horizontal)
                 } else {
-                    // 还没拉到 waypoint 时的占位
                     Text("Loading route...")
                         .frame(height: 260)
                         .frame(maxWidth: .infinity)
@@ -24,90 +27,124 @@ struct TripDetailView: View {
                         .padding(.horizontal)
                 }
 
-                // MARK: 行程概要卡片
-                TripSummaryCard(trip: trip)
-                    .padding(.horizontal)
+                // MARK: 行程概要
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Trip summary")
+                        .font(.headline)
 
-                // MARK: 简单速度列表（以后可以换成 Chart）
-                if !telematicsService.currentTripSpeedSeries.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Speed samples (every few sec)")
-                            .font(.headline)
-
-                        ForEach(telematicsService.currentTripSpeedSeries) { point in
-                            HStack {
-                                Text("\(Int(point.t)) s")
-                                Spacer()
-                                Text("\(Int(point.speedKmh)) km/h")
-                            }
-                            .font(.caption)
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Distance")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(String(format: "%.1f km", trip.distance))
+                                .font(.title3)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Duration")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(String(format: "%.0f min", trip.durationInMinutes))
+                                .font(.title3)
                         }
                     }
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(.horizontal)
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Avg speed")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(Int(trip.averageSpeed)) km/h")
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Max speed")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(Int(trip.maxSpeed)) km/h")
+                        }
+                    }
                 }
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal)
+
+                // MARK: 驾驶事件 & 手机使用
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Driving events")
+                        .font(.headline)
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Harsh braking")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(trip.harshBrakingCount)")
+                                .font(.title3)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Harsh acceleration")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(trip.harshAccelerationCount)")
+                                .font(.title3)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Harsh cornering")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(trip.harshCorneringCount)")
+                                .font(.title3)
+                        }
+                    }
+
+                    Divider().padding(.vertical, 4)
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Phone usage")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(String(format: "%.0f s", trip.phoneUsageSeconds))
+                                .font(.title3)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Night driving ratio")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(String(format: "%.0f %%", trip.nightDrivingRatio * 100))
+                                .font(.title3)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Rush hour ratio")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text(String(format: "%.0f %%", trip.rushHourDrivingRatio * 100))
+                                .font(.title3)
+                        }
+                    }
+                }
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal)
             }
             .padding(.top)
         }
         .navigationTitle("Trip Detail")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            // 进来就向后端要这个 trip 的 waypoints
+            // 进入详情页时拉这个 trip 的 waypoints + events
             try? await telematicsService.fetchWaypoints(for: trip.id)
         }
         .onDisappear {
-            // 离开页面时清空，避免下次进来残留旧路线
             telematicsService.clearCurrentTripRoute()
         }
-    }
-}
-
-struct TripSummaryCard: View {
-    let trip: Trip
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Trip summary")
-                .font(.headline)
-
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Distance")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text(String(format: "%.1f km", trip.distance))
-                        .font(.title3)
-                }
-                Spacer()
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Duration")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text(String(format: "%.0f min", trip.durationInMinutes))
-                        .font(.title3)
-                }
-            }
-
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Avg speed")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text("\(Int(trip.averageSpeed)) km/h")
-                }
-                Spacer()
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Max speed")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text("\(Int(trip.maxSpeed)) km/h")
-                }
-            }
-        }
-        .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

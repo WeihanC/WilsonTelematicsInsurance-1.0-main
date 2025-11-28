@@ -26,8 +26,31 @@ struct DashboardView: View {
                         TripStatisticsSection(features: features)
                     }
                     
-                    // Recent Trips
-                    RecentTripsSection(trips: telematicsService.trips.prefix(3).map { $0 })
+                    // MARK: - Recent trips + See all
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            Text("Recent Trips")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            
+                            Spacer()
+                            
+                            // 只有有行程的时候才显示 "See all"
+                            if !telematicsService.trips.isEmpty {
+                                NavigationLink {
+                                    AllTripsView(trips: telematicsService.trips)
+                                } label: {
+                                    Text("See all")
+                                        .font(.subheadline)
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
+                        
+                        // 只显示最近 3 条
+                        RecentTripsSection(trips: Array(telematicsService.trips.prefix(3)))
+                    }
                     
                     // Refresh Button
                     Button(action: refreshData) {
@@ -72,8 +95,8 @@ struct DashboardView: View {
         isLoading = true
         Task {
             do {
-                _ = try await telematicsService.fetchTrips()      // trips 还可以留着
-                _ = try await telematicsService.fetchDailyStats() // ✅ 新增：拉 daily stats
+                _ = try await telematicsService.fetchTrips()      // 拉 trips
+                _ = try await telematicsService.fetchDailyStats() // 拉 daily stats
                 
                 await MainActor.run {
                     calculateFeatures()
@@ -216,27 +239,27 @@ struct RecentTripsSection: View {
     let trips: [Trip]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Recent Trips")
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.horizontal)
-            
-            if trips.isEmpty {
-                Text("No trips recorded yet")
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            } else {
+        if trips.isEmpty {
+            Text("No trips recorded yet")
+                .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity)
+                .padding()
+        } else {
+            VStack(spacing: 12) {
                 ForEach(trips) { trip in
-                    TripRow(trip: trip)
+                    NavigationLink {
+                        TripDetailView(trip: trip)
+                    } label: {
+                        TripRow(trip: trip)
+                    }
                 }
-                .padding(.horizontal)
             }
+            .padding(.horizontal)
         }
     }
 }
 
+// MARK: - Trip Row
 struct TripRow: View {
     let trip: Trip
     
@@ -284,6 +307,23 @@ struct TripRow: View {
         .background(Color(.systemBackground))
         .cornerRadius(10)
         .shadow(radius: 3)
+    }
+}
+
+// MARK: - All Trips View（放在同一个文件）
+// 不单独建文件，只是一个额外的 View，用于 "See all"
+struct AllTripsView: View {
+    let trips: [Trip]
+    
+    var body: some View {
+        List(trips) { trip in
+            NavigationLink {
+                TripDetailView(trip: trip)
+            } label: {
+                TripRow(trip: trip)
+            }
+        }
+        .navigationTitle("All Trips")
     }
 }
 

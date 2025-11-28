@@ -33,6 +33,9 @@
 		9B617FC02ED1B1E90016CB34 /* LoginAuth.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FC32ED3B7130016CB34 /* PermissionManager.swift */; };
 		9B617FCB2ED455A00016CB34 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 9B617FCA2ED455A00016CB34 /* FirebaseDatabase */; };
+		9B617FE92EDA29990016CB34 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FE82EDA29990016CB34 /* TripMapView.swift */; };
+		9B617FEB2EDA29A40016CB34 /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FEA2EDA29A40016CB34 /* TripDetailView.swift */; };
+		9B617FED2EDA29E00016CB34 /* TripsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FEC2EDA29E00016CB34 /* TripsResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +74,9 @@
 		9B617FBB2ED1B13B0016CB34 /* TelematicsAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelematicsAuthManager.swift; sourceTree = "<group>"; };
 		9B617FBE2ED1B1E90016CB34 /* LoginAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LoginAuth.xcframework; path = "../WilsonTelematicsInsurance 4/LoginAuth.xcframework"; sourceTree = "<group>"; };
 		9B617FC32ED3B7130016CB34 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		9B617FE82EDA29990016CB34 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
+		9B617FEA2EDA29A40016CB34 /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
+		9B617FEC2EDA29E00016CB34 /* TripsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -160,6 +166,7 @@
 		2A0000230000000000000001 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9B617FEC2EDA29E00016CB34 /* TripsResponse.swift */,
 				2A00000E0000000000000001 /* Trip.swift */,
 				2A0000100000000000000001 /* DriverFeatures.swift */,
 				2A0000120000000000000001 /* PricingQuote.swift */,
@@ -179,6 +186,8 @@
 		2A0000250000000000000001 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				9B617FEA2EDA29A40016CB34 /* TripDetailView.swift */,
+				9B617FE82EDA29990016CB34 /* TripMapView.swift */,
 				9B617FB92ED1AFFF0016CB34 /* AuthView.swift */,
 				9B617FB72ED1AFED0016CB34 /* AuthViewModel.swift */,
 				9B617FB52ED1AF760016CB34 /* ContentView.swift */,
@@ -307,12 +316,15 @@
 			files = (
 				9B617FBA2ED1AFFF0016CB34 /* AuthView.swift in Sources */,
 				2A0000010000000000000001 /* WilsonTelematicsInsuranceApp.swift in Sources */,
+				9B617FEB2EDA29A40016CB34 /* TripDetailView.swift in Sources */,
 				2A0000030000000000000001 /* AppDelegate.swift in Sources */,
 				9B617FB62ED1AF760016CB34 /* ContentView.swift in Sources */,
 				2A0000050000000000000001 /* DashboardView.swift in Sources */,
 				2A0000070000000000000001 /* PricingLabView.swift in Sources */,
+				9B617FED2EDA29E00016CB34 /* TripsResponse.swift in Sources */,
 				9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */,
 				2A0000090000000000000001 /* TipsView.swift in Sources */,
+				9B617FE92EDA29990016CB34 /* TripMapView.swift in Sources */,
 				2A00000B0000000000000001 /* OnboardingView.swift in Sources */,
 				2A00000D0000000000000001 /* Trip.swift in Sources */,
 				2A00000F0000000000000001 /* DriverFeatures.swift in Sources */,
