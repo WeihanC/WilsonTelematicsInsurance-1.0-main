@@ -14,10 +14,13 @@ import CoreLocation
 class TelematicsService: ObservableObject {
 
     static let shared = TelematicsService()
+    
+    /// 一定要用 DrivingAlertManager.shared，和 AlertView 里的保持同一个实例
+    let alertManager = DrivingAlertManager.shared
 
     // MARK: - Backend config
     /// 后端地址：真机上用你 Mac 的局域网 IP；模拟器上可以改回 http://localhost:4000
-    private let backendBaseURL = URL(string: "http://192.168.1.33:4000")!
+    private let backendBaseURL = URL(string: "https://wilson-telematics-backend-production.up.railway.app")!
 
     // MARK: - Published state
     @Published private(set) var isSDKEnabled: Bool = false
@@ -49,6 +52,8 @@ class TelematicsService: ObservableObject {
         print("👤 Configuring telematics user, deviceToken = \(credentials.deviceToken)")
         initializeSDK(deviceToken: credentials.deviceToken)
     }
+    
+    
 
     // MARK: - Initialize SDK
     /// 实际执行 SDK 初始化 & 绑定 deviceToken 的地方
@@ -109,7 +114,7 @@ class TelematicsService: ObservableObject {
         dailyStats = decoded.days
 
         print("📊 Loaded daily stats: \(dailyStats.count) days")
-        if let first = dailyStats.first {
+        if let first = decoded.days.first {
             print("👉 First day mileage = \(first.mileageKm) km")
             print("👉 First day avgSpeed = \(first.avgSpeedKmh) km/h")
         }
@@ -298,6 +303,101 @@ class TelematicsService: ObservableObject {
     func checkPermissions() -> Bool {
         PermissionManager.shared.hasAllPermissions()
     }
+    
+    // MARK: - 实时采样入口（给 AppDelegate / SDK 调）
+
+    /// 举例：某个 SDK 回调 / Timer 每秒调用一次
+    func handleRealtimeSample(speedMps: Double,
+                              speedLimitMps: Double?,
+                              accelMps2: Double?,
+                              isHarshBrake: Bool,
+                              isHarshAccel: Bool) {
+        let sample = LiveDrivingSample(
+            timestamp: Date(),
+            speedMps: speedMps,
+            speedLimitMps: speedLimitMps,
+            accelMps2: accelMps2,
+            isHarshBrakingEvent: isHarshBrake,
+            isHarshAccelEvent: isHarshAccel
+        )
+
+        alertManager.process(sample: sample)
+    }
+
+    /// AppDelegate.onLocationChanged(_:) 可以直接用这个入口
+    func handleLocationUpdateFromSDK(_ location: CLLocation) {
+        let rawSpeed = location.speed
+        let speedMps = rawSpeed > 0 ? rawSpeed : 0
+
+        print("🚗 TelematicsService received location — speedMps =", speedMps)
+
+        handleRealtimeSample(
+            speedMps: speedMps,
+            speedLimitMps: nil,      // 以后可以接真实限速
+            accelMps2: nil,
+            isHarshBrake: false,
+            isHarshAccel: false
+        )
+    }
+
+    /// 调试用：不用开车也能直接触发一次严重危险事件
+    func debugTriggerSevereEvent() {
+        DrivingAlertManager.shared.handleSDKEvent(type: "harsh_braking_debug")
+    }
+    
+    
+    // MARK: - Alert Event Logging / Reporting
+
+    func logAlertEvent(_ alert: DrivingAlert) {
+        // 本地先打印一条，万一之后你连上 Xcode，也能看到
+        print("📡 [AlertEvent] level=\(alert.level) time=\(alert.time) msg=\(alert.message)")
+
+        // 异步发给后端（忽略错误就行，防止影响用户体验）
+        Task {
+            await sendAlertEventToBackend(alert)
+        }
+    }
+
+    private func sendAlertEventToBackend(_ alert: DrivingAlert) async {
+        guard let credentials = credentials else {
+            print("⚠️ No credentials, skip sending alert event")
+            return
+        }
+
+        let jwt = credentials.jwt
+        let url = backendBaseURL.appendingPathComponent("/api/alert-events")
+
+        struct AlertEventPayload: Encodable {
+            let time: String
+            let level: String
+            let message: String
+        }
+
+        let iso = ISO8601DateFormatter()
+        let payload = AlertEventPayload(
+            time: iso.string(from: alert.time),
+            level: "\(alert.level)",  // 简单用字符串描述
+            message: alert.message
+        )
+
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(payload)
+
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let http = response as? HTTPURLResponse, http.statusCode != 200 {
+                print("❌ sendAlertEventToBackend httpStatus = \(http.statusCode)")
+            } else {
+                print("✅ Alert event sent to backend")
+            }
+        } catch {
+            print("❌ Failed to send alert event: \(error)")
+        }
+    }
+
 }
 
 

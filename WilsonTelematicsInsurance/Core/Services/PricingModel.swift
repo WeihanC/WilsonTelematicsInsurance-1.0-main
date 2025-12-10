@@ -10,7 +10,7 @@ import Foundation
 /// Service class to calculate insurance pricing based on driving behavior
 class PricingModel {
     static let shared = PricingModel()
-    
+
     // Base pricing configuration (monthly in USD)
     private let basePremium: Double = 150.0
     private let minimumPremium: Double = 95.0

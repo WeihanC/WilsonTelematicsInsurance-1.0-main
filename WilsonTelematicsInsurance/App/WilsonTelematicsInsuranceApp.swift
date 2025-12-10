@@ -24,7 +24,7 @@ struct WilsonTelematicsInsuranceApp: App {
                         .environmentObject(authVM)
                 } else {
                     // 登录后 → 主界面
-                    ContentView()
+                    MainTabView()              // ✅ 确保这里用的是 MainTabView
                         .environmentObject(authVM)
                 }
             }
@@ -56,9 +56,10 @@ struct MainTabView: View {
                     }
                     .tag(1)
                 
-                TipsView()
+                // ✅ 第三个 Tab：从 TipsView 改成 AlertView
+                AlertView()
                     .tabItem {
-                        Label("Tips", systemImage: "lightbulb")
+                        Label("Alerts", systemImage: "exclamationmark.triangle")
                     }
                     .tag(2)
             }
@@ -77,7 +78,7 @@ struct MainTabView: View {
         switch selectedTab {
         case 0: return "Dashboard"
         case 1: return "Pricing Lab"
-        case 2: return "Driving Tips"
+        case 2: return "Driving Alerts"   // ✅ 更新标题
         default: return "Home"
         }
     }

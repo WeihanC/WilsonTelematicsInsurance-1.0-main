@@ -292,7 +292,7 @@ class DrivingAlertManager: ObservableObject {
         scheduleRiskReset()
     }
 
-    // MARK: - UI 反馈：震动 + banner
+    // MARK: - UI 反馈：震动 + banner（你已经在 AlertView 里实现）
 
     private func triggerMediumAlert(reason: String, now: Date) {
         triggerHaptic(for: .medium)

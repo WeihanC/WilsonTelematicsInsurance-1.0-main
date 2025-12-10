@@ -11,7 +11,6 @@
 		2A0000030000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000040000000000000001 /* AppDelegate.swift */; };
 		2A0000050000000000000001 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000060000000000000001 /* DashboardView.swift */; };
 		2A0000070000000000000001 /* PricingLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000080000000000000001 /* PricingLabView.swift */; };
-		2A0000090000000000000001 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000A0000000000000001 /* TipsView.swift */; };
 		2A00000B0000000000000001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000C0000000000000001 /* OnboardingView.swift */; };
 		2A00000D0000000000000001 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A00000E0000000000000001 /* Trip.swift */; };
 		2A00000F0000000000000001 /* DriverFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0000100000000000000001 /* DriverFeatures.swift */; };
@@ -36,6 +35,8 @@
 		9B617FE92EDA29990016CB34 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FE82EDA29990016CB34 /* TripMapView.swift */; };
 		9B617FEB2EDA29A40016CB34 /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FEA2EDA29A40016CB34 /* TripDetailView.swift */; };
 		9B617FED2EDA29E00016CB34 /* TripsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FEC2EDA29E00016CB34 /* TripsResponse.swift */; };
+		9B6180012EEA079F0016CB34 /* DrivingRiskLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B617FFF2EEA079F0016CB34 /* DrivingRiskLevel.swift */; };
+		9B6180122EEA179E0016CB34 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6180112EEA179E0016CB34 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,7 +58,6 @@
 		2A0000040000000000000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A0000060000000000000001 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		2A0000080000000000000001 /* PricingLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingLabView.swift; sourceTree = "<group>"; };
-		2A00000A0000000000000001 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
 		2A00000C0000000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2A00000E0000000000000001 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		2A0000100000000000000001 /* DriverFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverFeatures.swift; sourceTree = "<group>"; };
@@ -77,6 +77,8 @@
 		9B617FE82EDA29990016CB34 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		9B617FEA2EDA29A40016CB34 /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		9B617FEC2EDA29E00016CB34 /* TripsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsResponse.swift; sourceTree = "<group>"; };
+		9B617FFF2EEA079F0016CB34 /* DrivingRiskLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingRiskLevel.swift; sourceTree = "<group>"; };
+		9B6180112EEA179E0016CB34 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -207,7 +209,8 @@
 		2A0000270000000000000001 /* Tips */ = {
 			isa = PBXGroup;
 			children = (
-				2A00000A0000000000000001 /* TipsView.swift */,
+				9B6180112EEA179E0016CB34 /* AlertView.swift */,
+				9B617FFF2EEA079F0016CB34 /* DrivingRiskLevel.swift */,
 			);
 			path = Tips;
 			sourceTree = "<group>";
@@ -315,6 +318,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B617FBA2ED1AFFF0016CB34 /* AuthView.swift in Sources */,
+				9B6180012EEA079F0016CB34 /* DrivingRiskLevel.swift in Sources */,
+				9B6180122EEA179E0016CB34 /* AlertView.swift in Sources */,
 				2A0000010000000000000001 /* WilsonTelematicsInsuranceApp.swift in Sources */,
 				9B617FEB2EDA29A40016CB34 /* TripDetailView.swift in Sources */,
 				2A0000030000000000000001 /* AppDelegate.swift in Sources */,
@@ -323,7 +328,6 @@
 				2A0000070000000000000001 /* PricingLabView.swift in Sources */,
 				9B617FED2EDA29E00016CB34 /* TripsResponse.swift in Sources */,
 				9B617FC42ED3B7130016CB34 /* PermissionManager.swift in Sources */,
-				2A0000090000000000000001 /* TipsView.swift in Sources */,
 				9B617FE92EDA29990016CB34 /* TripMapView.swift in Sources */,
 				2A00000B0000000000000001 /* OnboardingView.swift in Sources */,
 				2A00000D0000000000000001 /* Trip.swift in Sources */,
