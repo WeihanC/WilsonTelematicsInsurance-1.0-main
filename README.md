@@ -2,14 +2,14 @@
 
 <div align="center">
 
-**A Complete iOS Telematics-Based Insurance Pricing Application**
-
 [![iOS](https://img.shields.io/badge/iOS-15.0+-blue.svg)](https://www.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.5+-orange.svg)](https://swift.org/)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-3.0+-green.svg)](https://developer.apple.com/xcode/swiftui/)
-[![License](https://img.shields.io/badge/License-Educational-lightgrey.svg)](LICENSE)
+[![Firebase](https://img.shields.io/badge/Firebase-Auth-yellow.svg)](https://firebase.google.com/)
 
-*Transform driving behavior data into personalized insurance pricing*
+**Complete iOS Telematics Car Insurance App - Smart Premium Calculation Based on Real Driving Behavior**
+
+Firebase User Auth | Damoov Telematics SDK | Node.js Backend Integration | Real-time Trip Tracking
 
 </div>
 
@@ -17,118 +17,247 @@
 
 ## 📋 Table of Contents
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Architecture](#-architecture)
+- [Project Overview](#-project-overview)
+- [Core Features](#-core-features)
+- [Technical Architecture](#-technical-architecture)
 - [Project Structure](#-project-structure)
-- [Requirements](#-requirements)
-- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [Feature Details](#-feature-details)
+- [Technical Implementation](#-technical-implementation)
 - [Configuration](#-configuration)
-- [Usage](#-usage)
-- [Technical Details](#-technical-details)
 - [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Support](#-support)
+- [FAQ](#-faq)
 
 ---
 
-## 🎯 Overview
+## 🎯 Project Overview
 
-Wilson Telematics Insurance is a complete iOS application that leverages real-time driving behavior data (telematics) to calculate personalized car insurance pricing. By monitoring driving patterns such as harsh braking, speeding, phone usage, and night driving, the app provides users with transparent, behavior-based insurance quotes and actionable tips to reduce premiums.
-
-Built with modern iOS technologies including **Swift**, **SwiftUI**, and the **Damoov Telematics SDK**, this application demonstrates the future of usage-based insurance (UBI) where safe drivers are rewarded with lower premiums.
+Wilson Telematics Insurance is a **production-grade** iOS application demonstrating how to use telematics technology to calculate car insurance premiums based on driving behavior. This project is **not a demo or template**, but a fully functional real application.
 
 ### Key Highlights
 
-- 📊 **Real-time Driving Analytics** - Track and visualize driving behavior metrics
-- 💰 **Dynamic Pricing Model** - Insurance quotes based on actual driving patterns
-- 🎮 **Interactive Pricing Lab** - Experiment with different driving behaviors to see premium impacts
-- 💡 **Personalized Tips** - Get actionable advice to improve driving safety and reduce costs
-- 🏗️ **Clean Architecture** - MVVM pattern with clear separation of concerns
-- 📱 **Native iOS** - Built entirely with SwiftUI for a modern, responsive UI
+- ✅ **Complete User System** - Firebase Authentication (Register/Login/Logout)
+- ✅ **Real Backend Integration** - Node.js API for trips and statistics data
+- ✅ **Telematics SDK Integration** - Damoov SDK for automatic driving behavior tracking
+- ✅ **Real-time Trip Tracking** - GPS tracking + Speed monitoring + Event detection
+- ✅ **Map Visualization** - Display trip routes and driving events on map
+- ✅ **Dynamic Pricing Engine** - Premium calculation based on risk factors
+- ✅ **Interactive Lab** - Users can simulate premium impact of different driving habits
+
+### Use Cases
+
+- **Insurance Companies**: Implement UBI (Usage-Based Insurance) pricing model
+- **Driving Behavior Analysis**: Monitor and improve driving habits
+- **Fleet Management**: Enterprise fleet driving behavior monitoring
+- **Learning Project**: Understand SwiftUI, Firebase, Telematics SDK integration
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
-### 📈 Dashboard
+### 1. 🔐 User Authentication System
 
-The main hub for all driving insights:
+Complete user management using Firebase Authentication:
 
-- **Real-time Driving Score** (0-100) - Overall assessment of driving safety
-- **Trip Statistics** - Total trips, distance traveled, and driving hours
-- **Recent Trips List** - Detailed view of recent journeys with behavior metrics
-- **Live Data Sync** - Refresh button to fetch the latest telematics data
-- **Quick Overview Cards** - At-a-glance metrics for key driving behaviors
+**Login Screen** (AuthView)
+- Email/password login
+- Remember login state
+- Error handling and user feedback
 
-### 🧪 Pricing Lab
+**Registration**
+- Create new user account
+- Automatically create Telematics user
+- Obtain Damoov virtual device token (deviceToken)
+- Initialize SDK and start tracking
 
-Interactive tool for understanding insurance pricing:
+**Logout**
+- Clear user session
+- Stop SDK tracking
+- Clear local data
 
-- **Dynamic Sliders** - Adjust driving behavior parameters in real-time
-  - Harsh braking rate (events per 100 km)
-  - Speeding events per trip
-  - Phone usage percentage
-  - Night driving ratio
-- **Live Premium Calculation** - See immediate pricing updates as you adjust behaviors
-- **Risk Score Breakdown** - Understand how each factor contributes to your premium
-- **Visual Risk Indicators** - Color-coded bars showing risk levels for each category
-- **Baseline Comparison** - Compare custom scenarios against your actual driving
+### 2. 📊 Dashboard
 
-### 💡 Tips & Advice
+Real-time display of user driving data and statistics:
 
-Comprehensive guidance for safer driving and lower premiums:
+**Driving Score Card** (DrivingScoreCard)
+- Comprehensive driving score 0-100
+- Color coding based on score (Green=Safe, Red=Risky)
+- Large font display, clear at a glance
 
-- **8 Safety Tips** - Best practices for defensive and safe driving
-- **6 Cost-Saving Strategies** - Actionable advice to reduce insurance premiums
-- **Categorized Content** - Tips organized by safety and financial impact
-- **Easy-to-Follow Format** - Clear, concise advice with practical implementation steps
+**Trip Statistics** (TripStatisticsSection)
+- Total number of trips
+- Total distance (kilometers)
+- Total driving hours
+- Average speed (km/h)
+- Data from backend `/api/daily-stats` endpoint
 
-### 🚀 Onboarding
+**Recent Trips List** (RecentTripsSection)
+- Display last 3 trips
+- Each trip includes:
+  - Departure and arrival time
+  - Trip distance
+  - Trip duration
+  - Harsh braking, speeding events
+  - Phone usage duration
+  - Night driving duration
+- Click to view trip details
 
-Smooth initial setup experience:
+**View All Trips** (AllTripsView)
+- Complete trip history
+- Search and filter functionality
+- Sort by date
 
-- **SDK Initialization** - Seamless setup of the Damoov Telematics SDK
-- **Permission Requests** - Guided flow for location and motion permissions
-- **Device Token Configuration** - Easy integration with Damoov DataHub
-- **Welcome Experience** - Clear explanation of app features and benefits
+**Data Refresh**
+- Manual refresh button
+- Asynchronous data fetching
+- Loading state display
+
+### 3. 🗺️ Trip Details & Map
+
+**Trip Detail View** (TripDetailView)
+- Complete trip information
+- Interactive map showing route
+- Speed curve chart
+- Driving event markers
+
+**Map View** (TripMapView)
+- Display trip route using MapKit
+- Different colors indicate speed changes
+- Mark driving event locations:
+  - 🔴 Harsh braking events
+  - 🟡 Speeding events
+  - 📱 Phone usage
+  - 🌙 Night driving
+- Zoom and pan functionality
+
+**Speed Analysis**
+- Real-time speed curve
+- Average speed calculation
+- Maximum speed annotation
+
+### 4. 🧪 Pricing Lab
+
+Interactive tool for users to understand how driving behavior affects premiums:
+
+**Adjustable Parameters** (4 sliders)
+- **Harsh Braking Rate**: 0-10 events/100km
+- **Speeding Events**: 0-15 events/trip
+- **Phone Usage Ratio**: 0-50%
+- **Night Driving Ratio**: 0-100%
+
+**Real-time Calculation**
+- Premium updates instantly with slider adjustments
+- Display risk score (0-100)
+- Display risk multiplier (0.7x - 2.0x)
+
+**Premium Display**
+- Monthly premium: $95 - $220/month
+- Comparison with base premium (savings or increase)
+- Minimum and maximum premium range
+
+**Risk Factor Breakdown**
+- Visualization of each factor's weight
+- Bar charts showing risk levels
+- Color coding (Green=low risk, Yellow=medium, Red=high)
+
+**Reset Function**
+- One-click return to average driver parameters
+
+### 5. 💡 Driving Tips (TipsView)
+
+Personalized safety and savings advice:
+
+**Safe Driving Tips** (8 tips)
+- Defensive driving techniques
+- Deceleration and braking skills
+- Attention focus methods
+- Adverse weather driving
+- Maintain safe distance
+- Regular vehicle maintenance
+
+**Premium Savings Strategies** (6 tips)
+- Reduce peak hour driving
+- Avoid night driving
+- Plan routes in advance
+- Reduce phone usage
+- Smooth acceleration and braking
+- Attend safe driving courses
+
+**User Profile** (ProfileView)
+- View personal information
+- Driving statistics summary
+- Settings and preferences
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Technical Architecture
 
-The application follows a **clean, layered architecture** with clear separation between business logic, data models, and UI components:
+### Architecture Pattern
+
+This project adopts **Clean Architecture** + **MVVM Pattern**:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                      App                        │
-│   (Entry Point & Configuration)                 │
-│   • WilsonTelematicsInsuranceApp.swift          │
-│   • AppDelegate.swift                           │
-└────────────────┬────────────────────────────────┘
-                 │
-┌────────────────▼────────────────────────────────┐
-│                     Views                       │
-│    (SwiftUI UI Modules)                         │
-│   • Dashboard    • Tips                         │
-│   • PricingLab   • Onboarding                   │
-└────────────────┬────────────────────────────────┘
-                 │
-┌────────────────▼────────────────────────────────┐
-│                     Core                        │
-│   (Business Logic & Services)                   │
-│   • Models: Trip, DriverFeatures, PricingQuote  │
-│   • Services: TelematicsService, PricingModel   │
+│              App Layer                          │
+│  • WilsonTelematicsInsuranceApp.swift           │
+│  • AppDelegate.swift (Firebase + SDK Init)      │
+│  • PermissionManager.swift                      │
+│  • TelematicsAuthManager.swift                  │
+└──────────────────┬──────────────────────────────┘
+                   │ depends on
+┌──────────────────▼──────────────────────────────┐
+│           Features Layer                        │
+│  Dashboard/                                     │
+│    • DashboardView                              │
+│    • AuthView + AuthViewModel                   │
+│    • TripDetailView                             │
+│    • TripMapView                                │
+│  PricingLab/                                    │
+│    • PricingLabView                             │
+│  Tips/                                          │
+│    • TipsView                                   │
+│    • ProfileView                                │
+│  Onboarding/                                    │
+│    • OnboardingView                             │
+└──────────────────┬──────────────────────────────┘
+                   │ depends on
+┌──────────────────▼──────────────────────────────┐
+│             Core Layer                          │
+│  Models/                                        │
+│    • Trip                                       │
+│    • DriverFeatures                             │
+│    • PricingQuote                               │
+│    • TripsResponse                              │
+│    • DailyStatsResponse                         │
+│  Services/                                      │
+│    • TelematicsService (SDK + API)              │
+│    • PricingModel (Pricing Engine)              │
 └─────────────────────────────────────────────────┘
 ```
 
-### Design Patterns
+### Tech Stack
 
-- **MVVM (Model-View-ViewModel)** - Views observe `@ObservableObject` services for reactive updates
-- **Dependency Injection** - Services accessed via `.shared` singleton pattern for easy testing
-- **Protocol-Oriented Design** - `Tip` protocol enables extensible tips system
-- **Composition** - Small, reusable SwiftUI components for maintainability
+**Frontend**
+- **Swift 5.5+** - Programming Language
+- **SwiftUI** - UI Framework
+- **Combine** - Reactive Programming
+- **MapKit** - Map Display
+- **CoreLocation** - Location Services
+
+**Backend Integration**
+- **Node.js API** - Data Fetching Interface
+- **RESTful API** - HTTP Communication
+- **JWT Authentication** - Bearer Token
+
+**SDK & Services**
+- **Damoov Telematics SDK 7.0+** - Driving Behavior Tracking
+- **Firebase Authentication** - User Authentication
+- **Firebase Core** - Base Services
+
+**Development Tools**
+- **Xcode 14.0+**
+- **Swift Package Manager** - Dependency Management
+- **iOS 15.0+** - Minimum System Version
 
 ---
 
@@ -136,492 +265,545 @@ The application follows a **clean, layered architecture** with clear separation 
 
 ```
 WilsonTelematicsInsurance/
+├── WilsonTelematicsInsurance.xcodeproj/      # Xcode Project
 │
-├── App/
-│   ├── WilsonTelematicsInsuranceApp.swift    # SwiftUI @main entry point
-│   ├── AppDelegate.swift                     # SDK lifecycle management
-│   └── Info.plist                            # App configuration & permissions
-│
-├── Core/
-│   ├── Models/
-│   │   ├── Trip.swift                        # Trip data model
-│   │   ├── DriverFeatures.swift              # Aggregated driving metrics
-│   │   └── PricingQuote.swift                # Insurance quote model
+├── WilsonTelematicsInsurance/                # Source Code
 │   │
-│   └── Services/
-│       ├── TelematicsService.swift           # Telematics SDK wrapper
-│       └── PricingModel.swift                # Insurance pricing engine
-│
-├── Views/
-│   ├── Dashboard/
-│   │   ├── DashboardView.swift               # Main dashboard screen
-│   │   ├── DrivingScoreCard.swift            # Score display component
-│   │   ├── TripStatsCard.swift               # Statistics component
-│   │   └── RecentTripsList.swift             # Trip history list
+│   ├── App/                                  # App Layer (5 files)
+│   │   ├── WilsonTelematicsInsuranceApp.swift    # Main entry + Tab navigation
+│   │   ├── AppDelegate.swift                     # Firebase + SDK init
+│   │   ├── PermissionManager.swift               # Permission management
+│   │   ├── TelematicsAuthManager.swift           # Damoov user management
+│   │   └── TripMapView.swift                     # Map component
 │   │
-│   ├── PricingLab/
-│   │   ├── PricingLabView.swift              # Interactive pricing tool
-│   │   ├── BehaviorSlider.swift              # Custom slider component
-│   │   └── RiskFactorBar.swift               # Risk visualization
+│   ├── Core/                                 # Core Business Layer
+│   │   ├── Models/                           # Data Models (4 files)
+│   │   │   ├── Trip.swift                    # Trip model
+│   │   │   ├── DriverFeatures.swift          # Driver features
+│   │   │   ├── PricingQuote.swift            # Quote model
+│   │   │   └── TripsResponse.swift           # API response
+│   │   │
+│   │   └── Services/                         # Service Layer (4 files)
+│   │       ├── TelematicsService.swift       # SDK + API service
+│   │       ├── PricingModel.swift            # Pricing engine
+│   │       ├── TripsView.swift               # Trips list
+│   │       └── TripDetailView.swift          # Trip details
 │   │
-│   ├── Tips/
-│   │   ├── TipsView.swift                    # Tips & advice screen
-│   │   ├── TipCard.swift                     # Individual tip display
-│   │   └── Tip.swift                         # Tip protocol & data
+│   ├── Features/                             # Feature Modules
+│   │   ├── Dashboard/                        # Dashboard (6 files)
+│   │   │   ├── DashboardView.swift           # Main dashboard
+│   │   │   ├── AuthView.swift                # Login/Register UI
+│   │   │   ├── AuthViewModel.swift           # Auth logic
+│   │   │   ├── ContentView.swift             # Main content container
+│   │   │   ├── TripDetailView.swift          # Trip details
+│   │   │   └── TripMapView.swift             # Trip map
+│   │   │
+│   │   ├── PricingLab/                       # Pricing Lab (1 file)
+│   │   │   └── PricingLabView.swift          # Interactive pricing
+│   │   │
+│   │   ├── Tips/                             # Tips (2 files)
+│   │   │   ├── TipsView.swift                # Driving tips
+│   │   │   └── ProfileView.swift             # User profile
+│   │   │
+│   │   ├── Onboarding/                       # Onboarding (1 file)
+│   │   │   └── OnboardingView.swift          # First-time guide
+│   │   │
+│   │   └── data/                             # Data Models (1 file)
+│   │       └── DailyStatsResponse.swift      # Daily stats response
 │   │
-│   └── Onboarding/
-│       └── OnboardingView.swift              # Initial setup screen
+│   ├── Assets.xcassets/                      # Resources
+│   │   ├── AppIcon.appiconset/               # App icon
+│   │   └── AccentColor.colorset/             # Theme color
+│   │
+│   ├── Info.plist                            # Configuration
+│   └── GoogleService-Info.plist              # Firebase config
 │
-├── Resources/
-│   └── Assets.xcassets                       # App icons and images
-│
-└── WilsonTelematicsInsurance.xcodeproj       # Xcode project file
+├── README.md                                 # This file
+├── PROJECT_SUMMARY.md                        # Project summary
+├── START_HERE.md                             # Quick start
+├── ARCHITECTURE.md                           # Architecture docs
+├── SETUP.md                                  # Setup guide
+├── SDK_INTEGRATION.md                        # SDK integration
+└── iOS_COMPATIBILITY.md                      # Compatibility notes
+
+Total: 23 Swift files + 5 documentation files + config files
 ```
 
 ---
 
-## 💻 Requirements
+## 🚀 Quick Start
 
-### System Requirements
+### Prerequisites
 
-- **iOS**: 15.0 or later
-- **Xcode**: 14.0 or later
-- **Swift**: 5.5 or later
-- **macOS**: 12.0+ (for development)
+1. **Development Environment**
+   - macOS 12.0+
+   - Xcode 14.0+
+   - CocoaPods (optional)
 
-### Device Requirements
+2. **Account Preparation**
+   - Apple Developer account (for device testing)
+   - Firebase project (includes `GoogleService-Info.plist`)
+   - Damoov DataHub account
 
-- iPhone or iPad running iOS 15.0+
-- **Physical device recommended** for accurate telematics data collection
-- Background app refresh capability
-- Location services support
+3. **Backend Service**
+   - Node.js backend running at `http://192.168.1.33:4000`
+   - Or modify `backendBaseURL` in `TelematicsService.swift`
 
-### Permissions Required
+### Installation Steps
 
-The app requires the following iOS permissions (pre-configured in `Info.plist`):
-
-- **Location Permissions** (for trip tracking):
-  - `NSLocationAlwaysAndWhenInUseUsageDescription`
-  - `NSLocationAlwaysUsageDescription`
-  - `NSLocationWhenInUseUsageDescription`
-  
-- **Motion Permission** (for driving behavior detection):
-  - `NSMotionUsageDescription`
-
-- **Background Modes**:
-  - Location updates
-  - Background fetch
-  - Remote notifications
-
----
-
-## 🚀 Installation
-
-### Option 1: Clone and Open in Xcode
+#### 1. Clone Project
 
 ```bash
-# Clone the repository
 git clone https://github.com/WeihanC/WilsonTelematicsInsurance-1.0-main.git
-
-# Navigate to project directory
 cd WilsonTelematicsInsurance-1.0-main
+```
 
-# Open in Xcode
+#### 2. Open Project
+
+```bash
 open WilsonTelematicsInsurance.xcodeproj
 ```
 
-### Option 2: Download ZIP
+#### 3. Add Telematics SDK
 
-1. Download the repository as ZIP from GitHub
-2. Extract the archive
-3. Double-click `WilsonTelematicsInsurance.xcodeproj` to open in Xcode
-
-### Installing Dependencies
-
-The project uses **Swift Package Manager (SPM)** for dependency management:
-
-1. **Open the project in Xcode**
-2. Navigate to **File → Add Package Dependencies**
-3. Enter the Telematics SDK package URL:
+In Xcode:
+1. Select **File → Add Package Dependencies...**
+2. Enter package URL:
    ```
    https://github.com/Mobile-Telematics/telematicsSDK-iOS-new-SPM
    ```
-4. Set **minimum version**: `7.0.0`
-5. Select target: `WilsonTelematicsInsurance`
-6. Click **Add Package**
+3. Version: Select `7.0.0` or higher
+4. Target: Select `WilsonTelematicsInsurance`
+5. Click **Add Package**
 
-Xcode will automatically resolve and download the dependency.
+#### 4. Configure Backend Address (if needed)
+
+If your backend is not at `192.168.1.33:4000`, modify:
+
+```swift
+// TelematicsService.swift, around line 20
+private let backendBaseURL = URL(string: "http://YOUR_IP:YOUR_PORT")!
+```
+
+#### 5. Configure Firebase (if needed)
+
+To use your own Firebase project:
+1. Download `GoogleService-Info.plist` from Firebase Console
+2. Replace the file in project
+3. Ensure Bundle ID matches
+
+#### 6. Configure Signing
+
+1. Select project target `WilsonTelematicsInsurance`
+2. **Signing & Capabilities**
+3. Select your Team
+4. Confirm Bundle Identifier
+
+#### 7. Run Application
+
+1. Select simulator or device
+2. Press `⌘R` or click Run
+3. First run will prompt for permissions, select "Always Allow"
+
+---
+
+## 🎮 Feature Details
+
+### User Registration Flow
+
+1. Open app, see login screen
+2. Click "Create Account"
+3. Enter email and password
+4. System automatically:
+   - Creates user in Firebase
+   - Calls backend `/api/auth/register` to create Damoov user
+   - Obtains virtual device token (deviceToken)
+   - Initializes Telematics SDK
+   - Starts background tracking
+5. Enter main interface (Dashboard)
+
+### Trip Tracking Flow
+
+1. **Automatic Tracking**
+   - SDK automatically detects driving behavior in background
+   - No manual start/stop required
+   - Automatically identifies trip start and end
+
+2. **Data Sync**
+   - SDK uploads data to Damoov servers
+   - Backend periodically fetches data from Damoov API
+   - Frontend gets latest data via refresh button
+
+3. **Data Display**
+   - Dashboard shows statistical data
+   - Trip list shows detailed information
+   - Click trip to view map and details
+
+### Pricing Calculation Logic
+
+**Risk Factor Weights**:
+```
+Risk Score = Speeding(35%) + Harsh Braking(30%) + Phone Usage(20%) + Night Driving(15%)
+```
+
+**Premium Calculation**:
+```
+Base Premium = $150/month
+Risk Multiplier = 0.7 + (Risk Score / 100) × 1.3
+Final Premium = Base Premium × Risk Multiplier
+
+Premium Range: $95/month (safe driver) to $220/month (high-risk driver)
+```
+
+**Examples**:
+- Safe driver (score 90): $150 × 0.87 = **$130/month**
+- Average driver (score 75): $150 × 1.075 = **$161/month**
+- High-risk driver (score 40): $150 × 1.22 = **$183/month**
+
+---
+
+## 🔧 Technical Implementation
+
+### Firebase Authentication Integration
+
+```swift
+// AppDelegate.swift
+func application(_ application: UIApplication, 
+                 didFinishLaunchingWithOptions launchOptions: [...]) -> Bool {
+    // Initialize Firebase
+    FirebaseApp.configure()
+    
+    // Initialize Telematics SDK
+    RPEntry.instance.application(application, 
+                                didFinishLaunchingWithOptions: launchOptions)
+    
+    return true
+}
+```
+
+### Telematics SDK Configuration
+
+```swift
+// TelematicsService.swift
+func configure(with credentials: TelematicsCredentials) {
+    // 1. Set virtual device token
+    RPEntry.instance.virtualDeviceToken = credentials.deviceToken
+    
+    // 2. Enable SDK
+    RPEntry.instance.setEnableSdk(true)
+    
+    // 3. Enable automatic tracking
+    RPEntry.instance.disableTracking = false
+    
+    print("✅ SDK configured, deviceToken: \(credentials.deviceToken)")
+}
+```
+
+### API Data Fetching
+
+```swift
+// TelematicsService.swift
+func fetchTrips() async throws -> [Trip] {
+    guard let credentials = credentials else {
+        return []
+    }
+    
+    // Build request
+    let url = backendBaseURL.appendingPathComponent("/api/trips")
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue("Bearer \(credentials.jwt)", 
+                    forHTTPHeaderField: "Authorization")
+    
+    // Send request
+    let (data, response) = try await URLSession.shared.data(for: request)
+    
+    // Parse response
+    let decoded = try JSONDecoder().decode(TripsResponse.self, from: data)
+    trips = decoded.trips
+    
+    return trips
+}
+```
+
+### Map Display Implementation
+
+```swift
+// TripMapView.swift
+Map(coordinateRegion: $region, annotationItems: annotations) { annotation in
+    MapAnnotation(coordinate: annotation.coordinate) {
+        // Show different icons based on event type
+        Image(systemName: annotation.iconName)
+            .foregroundColor(annotation.color)
+            .font(.title)
+    }
+}
+.overlay(
+    // Draw route
+    MapPolyline(coordinates: coordinates)
+        .stroke(Color.blue, lineWidth: 3)
+)
+```
 
 ---
 
 ## ⚙️ Configuration
 
-### 1. Obtain a Device Token
+### Info.plist Permissions
 
-To use the Telematics SDK, you need a device token from Damoov:
+Project has all required permissions configured:
 
-1. Create an account at [Damoov DataHub](https://platform.damoov.com/)
-2. Create a new application in the dashboard
-3. Copy your device token
+```xml
+<!-- Location Permissions -->
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>We need continuous access to your location to track driving behavior</string>
 
-### 2. Configure the Token
+<key>NSLocationAlwaysUsageDescription</key>
+<string>Location access needed even when app is in background to record trips</string>
 
-Update the device token in your code:
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Your location is needed when using the app</string>
 
-**In `OnboardingView.swift`:**
-```swift
-// Replace with your actual token
-let deviceToken = "YOUR_DEVICE_TOKEN_HERE"
-telematicsService.initializeSDK(deviceToken: deviceToken)
+<!-- Motion Permission -->
+<key>NSMotionUsageDescription</key>
+<string>Motion sensor access needed to detect driving behavior</string>
+
+<!-- Background Modes -->
+<key>UIBackgroundModes</key>
+<array>
+    <string>location</string>
+    <string>fetch</string>
+    <string>remote-notification</string>
+</array>
+
+<!-- Background Task Identifiers -->
+<key>BGTaskSchedulerPermittedIdentifiers</key>
+<array>
+    <string>sdk.damoov.apprefreshtaskid</string>
+    <string>sdk.damoov.appprocessingtaskid</string>
+</array>
 ```
 
-**Or in `AppDelegate.swift`:**
-```swift
-func application(_ application: UIApplication, 
-                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    TelematicsService.shared.initializeSDK(deviceToken: "YOUR_DEVICE_TOKEN_HERE")
-    return true
-}
-```
+### Backend API Endpoints
 
-> **Note**: For development and testing, the app includes demo functionality with mock data that works without a real token.
+Project requires the following API endpoints:
 
-### 3. Configure Signing
+1. **User Authentication**
+   - `POST /api/auth/register` - Register new user
+   - `POST /api/auth/login` - User login
 
-1. Open the project in Xcode
-2. Select the `WilsonTelematicsInsurance` target
-3. Go to **Signing & Capabilities**
-4. Add your Apple Developer account
-5. Select your team and bundle identifier
+2. **Trip Data**
+   - `GET /api/trips` - Get user trip list
+   - `GET /api/trips/:id` - Get single trip details
+   - `GET /api/trips/:id/route` - Get trip route coordinates
 
-### 4. Enable Background Modes
+3. **Statistics Data**
+   - `GET /api/daily-stats` - Get daily statistics
 
-Ensure the following capabilities are enabled:
-
-- ✅ **Location updates**
-- ✅ **Background fetch**
-- ✅ **Remote notifications**
-
-### 5. Background Task Identifiers
-
-The following background task identifiers are already configured in `Info.plist`:
-
-- `sdk.damoov.apprefreshtaskid`
-- `sdk.damoov.appprocessingtaskid`
+All protected endpoints require JWT Bearer Token.
 
 ---
 
-## 🎮 Usage
+## 🔮 Roadmap
 
-### Running the App
+### Phase 1: Core Features (Completed ✅)
 
-1. **Select Target Device**
-   - Choose a simulator (iOS 15.0+) or connect a physical device
-   - Physical device recommended for real telematics data
+- [x] Firebase user authentication
+- [x] Damoov SDK integration
+- [x] Backend API connection
+- [x] Dashboard interface
+- [x] Trip list and details
+- [x] Map visualization
+- [x] Pricing Lab
+- [x] Driving tips
 
-2. **Build and Run**
-   - Press `⌘R` or click the Run button
-   - Grant permissions when prompted:
-     - Location (Always)
-     - Motion & Fitness
+### Phase 2: Feature Enhancement (Planned)
 
-3. **Initial Setup**
-   - Complete the onboarding flow
-   - SDK will initialize automatically
-   - App will start tracking trips in the background
+- [ ] Push Notifications
+  - Trip end reminder
+  - Driving score notification
+  - Premium change alert
 
-### Testing with Mock Data
+- [ ] Data Persistence
+  - Core Data integration
+  - Offline data caching
+  - Historical data query
 
-For testing without real trips, the app includes comprehensive mock data:
+- [ ] Advanced Analytics
+  - Driving trend charts
+  - Monthly/yearly reports
+  - Compare with other users
 
-```swift
-// In your code
-let mockTrips = Trip.mockTrips()           // Sample trip data
-let mockFeatures = DriverFeatures.mock()   // Aggregated features
-let mockQuote = PricingQuote.mock()        // Sample insurance quote
-```
+### Phase 3: User Experience Optimization
 
-This allows you to:
-- Test UI components without waiting for real trip data
-- Demonstrate app functionality in presentations
-- Develop and debug features offline
+- [ ] Custom themes
+- [ ] Dark mode optimization
+- [ ] Animations and transitions
+- [ ] Haptic feedback
+- [ ] Localization support (multi-language)
 
----
+### Phase 4: Social & Gamification
 
-## 🔧 Technical Details
+- [ ] Achievement System
+  - Safe driving badges
+  - Milestone rewards
+  - Consecutive safe driving days
 
-### Telematics Integration
+- [ ] Leaderboards
+  - Friend comparison
+  - Global rankings
+  - Regional rankings
 
-The `TelematicsService` provides a clean interface to the Damoov SDK:
+- [ ] Challenge System
+  - Daily challenges
+  - Weekly goals
+  - Special events
 
-```swift
-// Initialize the SDK
-TelematicsService.shared.initializeSDK(deviceToken: "YOUR_TOKEN")
+### Phase 5: Advanced Features
 
-// Start automatic trip tracking
-TelematicsService.shared.startTracking()
+- [ ] Apple Watch App
+  - Quick trip view
+  - Driving reminders
+  - Quick score check
 
-// Fetch trip data
-let trips = try await TelematicsService.shared.fetchTrips()
+- [ ] Siri Shortcuts
+  - Voice trip query
+  - Quick score check
 
-// Calculate driving features from trips
-let features = DriverFeatures(from: trips)
-```
+- [ ] CarPlay Support
+  - In-car display
+  - Real-time feedback
 
-**Key Features:**
-- Automatic trip detection
-- Background tracking
-- Low battery impact
-- Accurate event detection (braking, speeding, phone usage)
+### Phase 6: Commercialization
 
-### Pricing Algorithm
+- [ ] Insurance Company Integration
+  - API interface
+  - Data export
+  - Quote generation
 
-The `PricingModel` calculates insurance premiums based on risk factors:
-
-```swift
-// Calculate quote from actual driving data
-let quote = PricingModel.shared.calculateQuote(from: driverFeatures)
-
-// Custom quote for experimentation (Pricing Lab)
-let customQuote = PricingModel.shared.calculateCustomQuote(
-    harshBrakingRate: 2.0,           // Events per 100 km
-    speedingEventsPerTrip: 3.0,      // Average speeding events
-    phoneUsageRatio: 0.1,            // 10% phone usage
-    nightDrivingRatio: 0.2           // 20% night driving
-)
-```
-
-**Risk Factor Weights:**
-- 🏎️ **Speeding**: 35% - Highest impact on premium
-- 🚗 **Harsh Braking**: 30% - Strong indicator of risk
-- 📱 **Phone Usage**: 20% - Distraction factor
-- 🌙 **Night Driving**: 15% - Increased accident risk
-
-**Base Premium**: $1,200/year  
-**Risk Multiplier Range**: 0.7x to 2.0x  
-**Final Premium Range**: $840 to $2,400/year
-
-### Data Models
-
-**Trip Model:**
-```swift
-struct Trip {
-    let id: String
-    let startTime: Date
-    let endTime: Date
-    let distance: Double              // Kilometers
-    let harshBrakingCount: Int
-    let speedingCount: Int
-    let phoneUsageSeconds: Double
-    let nightDrivingSeconds: Double
-}
-```
-
-**Driver Features Model:**
-```swift
-struct DriverFeatures {
-    let totalTrips: Int
-    let totalDistance: Double         // Kilometers
-    let totalDrivingHours: Double
-    let harshBrakingRate: Double      // Per 100 km
-    let speedingEventsPerTrip: Double
-    let phoneUsageRatio: Double       // 0.0 to 1.0
-    let nightDrivingRatio: Double     // 0.0 to 1.0
-}
-```
-
-**Pricing Quote Model:**
-```swift
-struct PricingQuote {
-    let basePremium: Double           // Base annual premium
-    let riskMultiplier: Double        // 0.7 to 2.0
-    let finalPremium: Double          // Calculated premium
-    let riskScore: Double             // 0 to 100
-    let riskFactors: [RiskFactor]     // Individual risk breakdowns
-}
-```
+- [ ] Payment Integration
+  - Apple Pay
+  - Subscription management
+  - Premium payment
 
 ---
 
-## 🗺️ Roadmap
+## ❓ FAQ
 
-### Phase 1: Production-Ready SDK Integration ✅ (Current)
+### Q1: Why don't I see any trips?
 
-- [x] Basic SDK integration
-- [x] Mock data for testing
-- [ ] Complete SDK method implementations
-- [ ] Robust error handling
-- [ ] Real-time trip detection testing
+**A:** Possible reasons:
+1. SDK hasn't tracked trips yet (need actual driving)
+2. Permissions not correctly granted (check "Always Allow" location permission)
+3. Backend not returning data (check network connection and backend status)
+4. Need to click "Refresh Data" button to manually refresh
 
-### Phase 2: User Authentication & Backend
+### Q2: How to test on simulator?
 
-- [ ] User registration and login system
-- [ ] Secure token storage (Keychain)
-- [ ] Backend API for user data
-- [ ] Cloud sync for trip history
-- [ ] User profile management
+**A:** 
+- Simulator **cannot** actually track driving behavior
+- Recommend using **physical device** for testing
+- Can modify backend to return mock data for UI testing
 
-### Phase 3: Enhanced Features
+### Q3: How to modify backend address?
 
-- [ ] **Trip Detail View**
-  - Interactive map showing route
-  - Driving events marked on map
-  - Speed graph throughout trip
-  - Detailed behavior breakdown
+**A:** 
+Edit line 20 in `TelematicsService.swift`:
+```swift
+private let backendBaseURL = URL(string: "http://YOUR_IP:PORT")!
+```
 
-- [ ] **Historical Analytics**
-  - Monthly/yearly driving trends
-  - Premium history over time
-  - Improvement tracking
-  - Goal setting and achievements
+### Q4: How to get Damoov Device Token?
 
-- [ ] **Social & Comparison**
-  - Anonymous comparison with similar drivers
-  - Leaderboards (optional opt-in)
-  - Share achievements on social media
-  - Challenge friends
+**A:** 
+1. Visit [Damoov DataHub](https://platform.damoov.com/)
+2. Create account and login
+3. Create new application
+4. Get Client ID and Client Secret
+5. Call Damoov API through backend to create virtual device
 
-- [ ] **Smart Notifications**
-  - Trip summaries after each drive
-  - Weekly driving reports
-  - Premium update alerts
-  - Safety tips based on patterns
+### Q5: Firebase configuration error?
 
-### Phase 4: Advanced Features
+**A:**
+1. Confirm `GoogleService-Info.plist` is in project
+2. Check Bundle ID matches
+3. Verify iOS app configuration in Firebase Console
+4. Clean project (⌘⇧K) and rebuild
 
-- [ ] **AI-Powered Insights**
-  - Predictive driving pattern analysis
-  - Personalized improvement recommendations
-  - Route safety ratings
-  - Optimal driving time suggestions
+### Q6: SDK not initialized error
 
-- [ ] **Gamification**
-  - Achievement badges
-  - Streak tracking
-  - Reward points for safe driving
-  - Premium discounts for milestones
+**A:**
+Ensure:
+1. `AppDelegate` calls `RPEntry.instance.application(...)`
+2. User is logged in and has deviceToken
+3. Called `TelematicsService.shared.configure(with: credentials)`
 
-- [ ] **Integration Options**
-  - Connect with insurance providers
-  - Export data to other platforms
-  - API for third-party integrations
+### Q7: Map doesn't show route
 
-### Phase 5: Testing & Quality Assurance
+**A:**
+Check:
+1. Trip has GPS coordinate data
+2. Backend returns `route` data
+3. Location permission is correctly granted
 
-- [ ] **Comprehensive Testing**
-  - Unit tests for pricing model
-  - UI tests for critical user flows
-  - Integration tests with SDK
-  - Performance testing
-  - Security audit
+### Q8: Build error "No such module 'TelematicsSDK'"
 
-- [ ] **Analytics & Monitoring**
-  - Crash reporting (Firebase Crashlytics)
-  - Usage analytics
-  - Performance monitoring
-  - A/B testing framework
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### Ways to Contribute
-
-1. **Report Bugs** - Found a bug? Open an issue with detailed steps to reproduce
-2. **Suggest Features** - Have an idea? We'd love to hear it!
-3. **Submit Pull Requests** - Fix bugs or add features
-4. **Improve Documentation** - Help make our docs clearer
-5. **Share Feedback** - User experience insights are valuable
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Test thoroughly
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Code Style Guidelines
-
-- Follow Swift API Design Guidelines
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Keep functions focused and concise
-- Write unit tests for new features
+**A:**
+1. Confirm SDK added via SPM
+2. Clean Build Folder (⌘⇧K)
+3. Restart Xcode
+4. Check Swift Package Dependencies
 
 ---
 
 ## 📄 License
 
-This project is licensed for **educational and demonstration purposes only**.
+This project is for **educational and demonstration purposes only**.
 
-### Important Notes:
+### Important Notes
 
-- **Not for Production Use** - This is a demo/learning project
-- **SDK License** - The Damoov Telematics SDK has its own license terms
-- **Insurance Pricing** - The pricing model is simplified for demonstration and should not be used for actual insurance calculations
+- ❌ Not for production use (without permission)
+- ❌ Pricing model is for demonstration, not real insurance calculation
+- ✅ Can be used for iOS development learning
+- ✅ Can be used for Telematics technology research
 
-For any questions about licensing or usage, please open an issue on GitHub.
+### Third-Party Licenses
 
----
-
-## 🆘 Support
-
-### Getting Help
-
-**For App-Related Questions:**
-- Open an issue on [GitHub Issues](https://github.com/WeihanC/WilsonTelematicsInsurance-1.0-main/issues)
-- Check existing issues for similar problems
-- Provide detailed information including iOS version and Xcode version
-
-**For Telematics SDK Questions:**
-- Visit [Damoov Documentation](https://docs.damoov.com/)
-- Check the [SDK GitHub Repository](https://github.com/Mobile-Telematics/telematicsSDK-iOS-new-SPM)
-- Contact Damoov support team
-
-### Common Issues
-
-**Issue**: SDK not initializing
-- **Solution**: Verify your device token is correct and active
-
-**Issue**: Trips not recording
-- **Solution**: Check location permissions are set to "Always" and background modes are enabled
-
-**Issue**: Build errors after cloning
-- **Solution**: Clean build folder (⌘⇧K) and ensure Swift packages are resolved
-
-**Issue**: App crashes on launch
-- **Solution**: Verify all permissions are configured in Info.plist and SDK version is 7.0.0+
+- **Damoov Telematics SDK** - Subject to Damoov license terms
+- **Firebase** - Subject to Google Terms of Service
 
 ---
 
-## 👨‍💻 About
+## 🙏 Acknowledgments
 
-This project was developed to demonstrate the integration of telematics technology with insurance pricing models, showcasing how modern iOS development practices can create compelling, data-driven user experiences.
+- **Damoov** - Excellent Telematics SDK
+- **Firebase** - User authentication and backend services
+- **Apple** - SwiftUI and MapKit frameworks
+- **Swift Community** - Open source contributions and support
 
-### Technologies Used
+---
 
-- **Swift** - Primary programming language
-- **SwiftUI** - Modern declarative UI framework
-- **Damoov Telematics SDK** - Trip detection and behavior analysis
-- **Swift Package Manager** - Dependency management
-- **Combine** - Reactive programming framework
+## 📞 Support
 
-### Author
+### Documentation
 
-**Weihan C**
-- GitHub: [@WeihanC](https://github.com/WeihanC)
+- 📖 [Damoov Documentation](https://docs.damoov.com/)
+- 📖 [Firebase Documentation](https://firebase.google.com/docs)
+- 📖 [Apple Developer](https://developer.apple.com/documentation/)
+
+### Contact
+
+- **GitHub**: [@WeihanC](https://github.com/WeihanC)
+- **Project Repository**: [WilsonTelematicsInsurance](https://github.com/WeihanC/WilsonTelematicsInsurance-1.0-main)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ using SwiftUI**
+**Built with Swift, SwiftUI and ❤️**
 
 ⭐ Star this repo if you find it helpful!
+
+**Version 1.0** - November 2025
 
 </div>
